@@ -1,8 +1,10 @@
 package Enigma.ParkingProject.model;
 
+import javax.annotation.processing.Generated;
 import java.util.Objects;
 
 public class Account {
+
     private int accountId;
     private String licensePlate;
     private String firstName;
