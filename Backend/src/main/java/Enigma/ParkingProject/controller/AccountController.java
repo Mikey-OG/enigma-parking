@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("account")
+@RequestMapping("/account")
 public class AccountController {
 
     @Autowired
@@ -21,11 +21,22 @@ public class AccountController {
 
     private static final DataStore dataStore = new DataStore();
 
-    @GetMapping("{account}") //GET at http://localhost:XXXX/account/MS7878DSB
-    public ResponseEntity<Account> getAccountPath(@PathVariable(value = "account") String licensePlate) {
-        Account account = dataStore.getAccountByLicensePlate(licensePlate);
+//    @GetMapping("{account}") //GET at http://localhost:XXXX/account/MS7878DSB
+//    public ResponseEntity<Account> getAccountPath(@PathVariable(value = "account") String licensePlate) {
+//        Account account = dataStore.getAccountByLicensePlate(licensePlate);
+//
+//        if(account != null) {
+//            return ResponseEntity.ok().body(account);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
-        if(account != null) {
+    @GetMapping("{id}")
+    public ResponseEntity<Account> getAccountPath(@PathVariable(value = "id") int id){
+        Account account = dataStore.getAccountById(id);
+
+        if(account != null){
             return ResponseEntity.ok().body(account);
         } else {
             return ResponseEntity.notFound().build();
@@ -75,6 +86,14 @@ public class AccountController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deletePost(@PathVariable int id) {
+        dataStore.deleteAccount(id);
+        // Idempotent method. Always return the same response (even if the resource has already been deleted before).
+        return ResponseEntity.ok().build();
+
     }
 
 

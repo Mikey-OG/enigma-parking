@@ -3,15 +3,45 @@ import {Table, Button} from "reactstrap";
 import AppNav from "./AppNav";
 
 class GuestList extends Component {
-    state = {
-        isLoading : true,
-        Guests : []
+
+    // state = {
+    //     isLoading : true,
+    //     Guests : []
+    // }
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            isLoading: true,
+            Guests : []
+        }
+
+        this.editClient = this.editClient.bind(this);
     }
 
-    async componentDidMount() {
-        const response=await fetch('/account');
+    editClient(id){
+        this.props.history.push(`/editclient/${id}`);
+    }
+
+    async remove(id){
+        await fetch(`/account/${id}`, {
+          method: 'DELETE',
+          headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+          }
+        }).then(() => {
+          let updatedGuests = [...this.state.Guests].filter(i => i.id !== id);
+          this.setState({Guests : updatedGuests});
+        });
+    }
+
+    async componentDidMount(){
+        const response = await fetch('/account')
         const body = await response.json();
         this.setState({Guests :body , isLoading: false});
+        console.log(body);
     }
 
     render() {
@@ -21,14 +51,14 @@ class GuestList extends Component {
         }
 
         let rows=
-            Guests.map(  guest =>
-                <tr id={guest.id}>
-                    <td width="20%">{guest.firstName}</td>
-                    <td width="20%">{guest.lastName}</td>
-                    <td width="20%">{guest.licensePlate}</td>
-                    <td width="20%">{guest.phoneNumber}</td>
-                    <td width="20%"><Button size="sm" color="primary">Edit</Button><a> </a>
-                        <Button size="sm" color="danger">Delete</Button></td>
+            Guests.map(guest =>
+                <tr key={guest.id}>
+                    <td>{guest.firstName}</td>
+                    <td>{guest.lastName}</td>
+                    <td>{guest.licensePlate}</td>
+                    <td>{guest.phoneNumber}</td>
+                    <td><Button size="sm" color="primary" onClick={() => this.editClient(guest.id)}>Edit</Button>
+                        <Button size="sm" color="danger" onClick={() => this.remove(guest.id)}>Delete</Button></td>
                 </tr>
             );
 

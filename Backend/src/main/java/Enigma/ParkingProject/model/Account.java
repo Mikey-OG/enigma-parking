@@ -5,14 +5,14 @@ import java.util.Objects;
 
 public class Account {
 
-    private int accountId;
+    private int id;
     private String licensePlate;
     private String firstName;
     private String lastName;
     private String phoneNumber;
 
-    public Account(int accountId, String licensePlate, String firstName, String lastName, String phoneNumber) {
-        this.accountId = accountId;
+    public Account(int id, String licensePlate, String firstName, String lastName, String phoneNumber) {
+        this.id = id;
         this.licensePlate = licensePlate;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,9 +22,9 @@ public class Account {
     public Account() {
     }
 
-    public int getAccountId() { return accountId; }
+    public int getAccountId() { return id; }
     public void setAccountId(int accountId) {
-        this.accountId = accountId;
+        this.id = id;
     }
 
     public String getLicensePlate() { return licensePlate; }
@@ -52,18 +52,18 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return accountId == account.accountId;
+        return id == account.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "ID =" + accountId +
+                "ID =" + id +
                 ", License Plate ='" + licensePlate + '\'' +
                 ", Name =" + firstName + " " + lastName +'\'' +
                 ", Phone Number = " + phoneNumber +
