@@ -11,15 +11,15 @@ import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
-    private final List<Account> accountList = new ArrayList<>();
-
-         IAccountRepository repo;
 
         @Autowired
-        public AccountService(IAccountRepository IAccountRepository) {
-            //this.IAccountRepository = IAccountRepository;
-            this.repo = repo;
-        }
+         IAccountRepository repo;
+
+
+//        public AccountService(IAccountRepository IAccountRepository) {
+//            //this.IAccountRepository = IAccountRepository;
+//            this.repo = repo;
+//        }
 
         @Override
         public List<Account> getAccountList()
