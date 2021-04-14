@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import {Table, Button} from "reactstrap";
 import AppNav from "./AppNav";
 import { Link } from 'react-router-dom';
+import Modal from "react-bootstrap/Modal";
 
 class GuestList extends Component {
 
@@ -11,21 +12,36 @@ class GuestList extends Component {
     // }
 
     constructor(props){
-        super(props)
+        super(props);
 
         this.state = {
             isLoading: true,
+            selectedGuest: [],
+            showDeleteDialog: false,
             Guests : []
-        }
+        };
 
-        this.editClient = this.editClient.bind(this);
+        this.editGuest = this.editGuest.bind(this);
+        this.deleteGuest = this.deleteGuest.bind(this);
+        this.openDeleteDialog = this.openDeleteDialog.bind(this);
+        this.closeDeleteDialog = this.closeDeleteDialog.bind(this);
     }
 
-    editClient(id){
+    editGuest(id){
         this.props.history.push(`/editclient/${id}`);
     }
 
-    async remove(id){
+    openDeleteDialog(guest){
+        this.setState({selectedGuest: guest});
+        this.setState({showDeleteDialog: true});
+    }
+
+    closeDeleteDialog(){
+        this.setState({showDeleteDialog: false});
+    }
+
+    async deleteGuest(){
+        const id = this.state.selectedGuest.accountId;
         await fetch(`/account/${id}`, {
           method: 'DELETE',
           headers : {
@@ -39,7 +55,7 @@ class GuestList extends Component {
     }
 
     async componentDidMount(){
-        const response = await fetch('/account')
+        const response = await fetch('/account');
         const body = await response.json();
         this.setState({Guests :body , isLoading: false});
         console.log(body);
@@ -50,7 +66,7 @@ class GuestList extends Component {
     }
 
     render() {
-        const {Guests , isLoading} = this.state;
+        const {Guests , isLoading, showDeleteDialog, selectedGuest} = this.state;
         if (isLoading) {
            return (<div>Loading...</div>)
         }
@@ -62,15 +78,16 @@ class GuestList extends Component {
                     <td>{guest.lastName}</td>
                     <td>{guest.licensePlate}</td>
                     <td>{guest.phoneNumber}</td>
-                    <td><Button size="sm" color="primary" onClick={() => this.editClient(guest.accountId)}>Edit</Button>
-                        <Button size="sm" color="danger" onClick={() => this.remove(guest.accountId)} tag={Link} to="/">Delete</Button></td>
+                    <td><Button size="sm" color="primary" onClick={() => this.editGuest(guest.accountId)}>Edit</Button>
+                        <a> </a>
+                        <Button size="sm" color="danger" onClick={() => this.openDeleteDialog(guest)}>Delete</Button></td>
                 </tr>
             );
 
         return (
             <div><AppNav/>
                 <h2 className="text-center mt-5">Guest List</h2>
-                <div className="container">
+                <div style={{position: 'absolute', left: '54%', transform: 'translate(-46%)'}} className="container">
                     <div className="row">
                         <div className="col-1"></div>
                         <div className="col-10">                    
@@ -92,6 +109,21 @@ class GuestList extends Component {
                         <div className="col-1"></div>
                     </div>
                 </div>
+                <Modal show={showDeleteDialog} onHide={() => this.closeDeleteDialog()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Delete Guest</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to delete this guest?<br/>
+                        {selectedGuest.firstName} {selectedGuest.lastName}</Modal.Body>
+                    <Modal.Footer>
+                        <Button color="danger" onClick={() => this.deleteGuest()} tag={Link} to="/">
+                            Delete
+                        </Button>
+                        <Button color="primary" onClick={() => this.closeDeleteDialog()}>
+                            Cancel
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
