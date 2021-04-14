@@ -1,18 +1,29 @@
 package Enigma.ParkingProject.model;
 
+
 import javax.annotation.processing.Generated;
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
+@Table(name ="account")
 public class Account {
-
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int accountId;
+    @Column(name = "licenseplate")
     private String licensePlate;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "phonenumber")
     private String phoneNumber;
 
-    public Account(int id, String licensePlate, String firstName, String lastName, String phoneNumber) {
-        this.id = id;
+    public Account(int accountId, String licensePlate, String firstName, String lastName, String phoneNumber) {
+        this.accountId = accountId;
         this.licensePlate = licensePlate;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,9 +33,9 @@ public class Account {
     public Account() {
     }
 
-    public int getAccountId() { return id; }
+    public int getAccountId() { return accountId; }
     public void setAccountId(int accountId) {
-        this.id = id;
+        this.accountId = accountId;
     }
 
     public String getLicensePlate() { return licensePlate; }
@@ -52,18 +63,18 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return id == account.id;
+        return accountId == account.accountId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(accountId);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "ID =" + id +
+                "ID =" + accountId +
                 ", License Plate ='" + licensePlate + '\'' +
                 ", Name =" + firstName + " " + lastName +'\'' +
                 ", Phone Number = " + phoneNumber +

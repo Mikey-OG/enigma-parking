@@ -1,17 +1,26 @@
 package Enigma.ParkingProject.repository;
 
 import Enigma.ParkingProject.model.Account;
+import Enigma.ParkingProject.serviceinterfaces.IAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class DataStore {
 
     private final List<Account> accountList = new ArrayList<>();
 
-    public DataStore(){
+    IAccountRepository repo;
 
+    @Autowired
+    public DataStore(){
+        this.repo = repo;
         accountList.add(new Account(1, "01-VBB-1", "Henk", "Broers", "+310623848125"));
         accountList.add(new Account(2, "92-HXK-9", "Sem", "de Jong", "+310624001200"));
         accountList.add(new Account(3, "25-BGD-2", "Daan", "Jansen", "+310622154985"));
@@ -30,52 +39,73 @@ public class DataStore {
 
     }
 
-    public List<Account> getAccountList() { return accountList; }
+    public List<Account> getAccountList() {
+        //return accountList;
+        return repo.findAll();
+    }
+
 
     public Account getAccountById(int accountId) {
-        for (Account account : accountList) {
+        /*for (Account account : accountList) {
             if (account.getAccountId() == accountId)
                 return account;
         }
-        return null;
+        return null;*/
+        return repo.findAll().get(accountId);
+
     }
 
-    public Account getAccountByLicensePlate(String licensePlate) {
+
+    /*public Account getAccountByLicensePlate(String licensePlate) {
         for (Account account : accountList) {
             if (account.getLicensePlate() == licensePlate)
                 return account;
         }
         return null;
-    }
+       return repo.findB
+    }*/
 
-    public boolean deleteAccount(int id) {
-        Account account = getAccountById(id);
+    public void deleteAccount(Account account) {
+        /*Account account = getAccountById(id);
         if (account == null){
             return false;
         }
+        return accountList.remove(account);*/
+        repo.delete(account);
 
-        return accountList.remove(account);
     }
 
 
-    public boolean addAccount(Account account) {
-        if (this.getAccountById(account.getAccountId()) != null){
+
+    public void addAccount(Account account) {
+        /*if (this.getAccountById(account.getAccountId()) != null){
             return false;
         }
         accountList.add(account);
-        return true;
+        return true;*/
+        repo.save(account);
     }
+
 
     public boolean updateAccount(Account account) {
         Account old = this.getAccountById(account.getAccountId());
         if (old == null) {
             return false;
         }
-        old.setFirstName(account.getFirstName());
-        old.setLastName(account.getLastName());
-        old.setLicensePlate(account.getLicensePlate());
-        old.setPhoneNumber(account.getPhoneNumber());
+
+        repo.save(account).setFirstName(account.getFirstName());
+        repo.save(account).setLastName(account.getLastName());
+        repo.save(account).setLicensePlate(account.getLicensePlate());
+        repo.save(account).setPhoneNumber(account.getPhoneNumber());
+
         return true;
+        /*
+           old.setFirstName(account.getFirstName());
+           old.setLastName(account.getLastName());
+           old.setLicensePlate(account.getLicensePlate());
+           old.setPhoneNumber(account.getPhoneNumber());
+           */
+
     }
 
 }

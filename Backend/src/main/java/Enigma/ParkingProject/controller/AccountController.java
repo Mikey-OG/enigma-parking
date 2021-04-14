@@ -48,30 +48,29 @@ public class AccountController {
     @PostMapping()
     //POST at http://localhost:XXXX/account
     public ResponseEntity<Account> createAccount(@RequestBody Account newAccount) {
-        if (!dataStore.addAccount(newAccount)){
+       /* if (!dataStore.addAccount(newAccount)){
             String entity =  "Account with license plate " + newAccount.getLicensePlate() + " already exists.";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
-        } else {
+        } else {*/
             String url = "account" + "/" + newAccount.getLicensePlate(); // url of the created account
             URI uri = URI.create(url);
             return new ResponseEntity(uri,HttpStatus.CREATED);
-        }
+        //}
 
     }
 
     @PutMapping("{account}")
-    //PUT at http://localhost:XXXX/account/{licensePlate}
-    public ResponseEntity<Account> updateAccount(@PathVariable("account") String licensePlate,  @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("phone") String phoneNo, @RequestParam("licenseplate") String newLicensePlate) {
-        Account account = dataStore.getAccountByLicensePlate(licensePlate);
+    //PUT at http://localhost:XXXX/account/{accountID}
+    public ResponseEntity<Account> updateAccount(@PathVariable("account") int accountID,  @RequestParam("licenseplate") String LicensePlate, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("phone") String phoneNo) {
+        Account account = dataStore.getAccountById(accountID);
         if (account == null){
             return new ResponseEntity("Please provide a valid license plate.",HttpStatus.NOT_FOUND);
         }
 
-
+        account.setLicensePlate(LicensePlate);
         account.setFirstName(firstName);
         account.setLastName(lastName);
         account.setPhoneNumber(phoneNo);
-        account.setLicensePlate(newLicensePlate);
         return ResponseEntity.noContent().build();
     }
 
@@ -91,8 +90,8 @@ public class AccountController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deletePost(@PathVariable int id) {
-        dataStore.deleteAccount(id);
+    public ResponseEntity deletePost(@PathVariable Account account) {
+        dataStore.deleteAccount(account);
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();
 
