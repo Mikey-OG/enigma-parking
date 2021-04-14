@@ -52,6 +52,7 @@ public class AccountController {
             String entity =  "Account with license plate " + newAccount.getLicensePlate() + " already exists.";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {*/
+
             String url = "account" + "/" + newAccount.getLicensePlate(); // url of the created account
             URI uri = URI.create(url);
             return new ResponseEntity(uri,HttpStatus.CREATED);
