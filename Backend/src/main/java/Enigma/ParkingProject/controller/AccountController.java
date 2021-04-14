@@ -2,9 +2,11 @@ package Enigma.ParkingProject.controller;
 
 import Enigma.ParkingProject.model.Account;
 import Enigma.ParkingProject.repository.DataStore;
+import Enigma.ParkingProject.service.Sms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -94,6 +96,18 @@ public class AccountController {
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();
 
+    }
+
+    @RequestMapping("/smsAvailable")
+    public void smsAvailable() {
+        Sms sms = new Sms();
+        sms.SendSmsParkingAvailable();
+    }
+
+    @RequestMapping("/smsFull")
+    public void smsFull() {
+        Sms sms = new Sms();
+        sms.SendSmsParkingFull();
     }
 
 
