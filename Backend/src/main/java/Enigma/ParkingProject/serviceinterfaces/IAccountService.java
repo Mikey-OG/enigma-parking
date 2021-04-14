@@ -9,11 +9,9 @@ public interface IAccountService {
 
     Account getAccountById(int accountId);
 
-    Account getAccountByLicensePlate(String licensePlate);
+    void deleteAccount(Account account);
 
-    boolean deleteAccount(int id);
-
-    boolean addAccount(Account account);
+    void addAccount(Account account);
 
     boolean updateAccount(Account account);
 }

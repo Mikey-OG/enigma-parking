@@ -74,6 +74,8 @@ class AddClient extends Component {
 
         const {AddClient, isLoading} = this.state;
 
+        if (isLoading)
+            return(<div>Loading...</div>)
 
 
         return ( 

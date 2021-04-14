@@ -68,6 +68,8 @@ class GuestList extends Component {
     render() {
         const {Guests , isLoading, showDeleteDialog, selectedGuest} = this.state;
 
+        if (isLoading)
+            return(<div>Loading...</div>)
 
         let rows=
             Guests.map(guest =>
