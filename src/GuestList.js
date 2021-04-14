@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Table, Button} from "reactstrap";
 import AppNav from "./AppNav";
+import { Link } from 'react-router-dom';
 
 class GuestList extends Component {
 
@@ -44,6 +45,10 @@ class GuestList extends Component {
         console.log(body);
     }
 
+    refreshPage() {
+        window.location.reload(false);
+    }
+
     render() {
         const {Guests , isLoading} = this.state;
         if (isLoading) {
@@ -52,13 +57,13 @@ class GuestList extends Component {
 
         let rows=
             Guests.map(guest =>
-                <tr key={guest.id}>
+                <tr id={guest.accountId}>
                     <td>{guest.firstName}</td>
                     <td>{guest.lastName}</td>
                     <td>{guest.licensePlate}</td>
                     <td>{guest.phoneNumber}</td>
-                    <td><Button size="sm" color="primary" onClick={() => this.editClient(guest.id)}>Edit</Button>
-                        <Button size="sm" color="danger" onClick={() => this.remove(guest.id)}>Delete</Button></td>
+                    <td><Button size="sm" color="primary" onClick={() => this.editClient(guest.accountId)}>Edit</Button>
+                        <Button size="sm" color="danger" onClick={() => this.remove(guest.accountId)} tag={Link} to="/">Delete</Button></td>
                 </tr>
             );
 
