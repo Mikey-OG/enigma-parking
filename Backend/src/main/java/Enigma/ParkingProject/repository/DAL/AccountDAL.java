@@ -1,10 +1,9 @@
-package Enigma.ParkingProject.repository;
+package Enigma.ParkingProject.repository.DAL;
 
 import Enigma.ParkingProject.model.Account;
-import Enigma.ParkingProject.serviceinterfaces.IAccountService;
+import Enigma.ParkingProject.repository.IAccountDAL;
+import Enigma.ParkingProject.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class DataStore {
+public class AccountDAL implements IAccountDAL {
 
     private final List<Account> accountList = new ArrayList<>();
 
@@ -40,72 +39,34 @@ public class DataStore {
 //
 //    }
 
+    @Override
     public List<Account> getAccountList() {
         //return accountList;
         return repo.findAll();
     }
 
-
+    @Override
     public Account getAccountById(int accountId) {
-        /*for (Account account : accountList) {
-            if (account.getAccountId() == accountId)
-                return account;
-        }
-        return null;*/
-        return repo.findAll().get(accountId);
+        return repo.getAccountByAccountId(accountId);
+    }
+
+    @Override
+    public void deleteAccount(int accountid) {
+
+        repo.deleteById(accountid);
 
     }
 
 
-    /*public Account getAccountByLicensePlate(String licensePlate) {
-        for (Account account : accountList) {
-            if (account.getLicensePlate() == licensePlate)
-                return account;
-        }
-        return null;
-       return repo.findB
-    }*/
-
-    public void deleteAccount(Account account) {
-        /*Account account = getAccountById(id);
-        if (account == null){
-            return false;
-        }
-        return accountList.remove(account);*/
-        repo.delete(account);
-
-    }
-
-
-
+    @Override
     public void addAccount(Account account) {
-        /*if (this.getAccountById(account.getAccountId()) != null){
-            return false;
-        }
-        accountList.add(account);
-        return true;*/
         repo.save(account);
     }
 
-
+    @Override
     public boolean updateAccount(Account account) {
-        Account old = this.getAccountById(account.getAccountId());
-        if (old == null) {
-            return false;
-        }
-
-        repo.save(account).setFirstName(account.getFirstName());
-        repo.save(account).setLastName(account.getLastName());
-        repo.save(account).setLicensePlate(account.getLicensePlate());
-        repo.save(account).setPhoneNumber(account.getPhoneNumber());
-
+        repo.save(account);
         return true;
-        /*
-           old.setFirstName(account.getFirstName());
-           old.setLastName(account.getLastName());
-           old.setLicensePlate(account.getLicensePlate());
-           old.setPhoneNumber(account.getPhoneNumber());
-           */
 
     }
 

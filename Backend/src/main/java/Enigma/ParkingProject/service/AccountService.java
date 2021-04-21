@@ -1,19 +1,18 @@
 package Enigma.ParkingProject.service;
 
 import Enigma.ParkingProject.model.Account;
-import Enigma.ParkingProject.repository.IAccountRepository;
+import Enigma.ParkingProject.repository.IAccountDAL;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
 
         @Autowired
-         IAccountRepository repo;
+        IAccountDAL accountDAL;
 
 
 //        public AccountService(IAccountRepository IAccountRepository) {
@@ -24,27 +23,27 @@ public class AccountService implements IAccountService {
         @Override
         public List<Account> getAccountList()
         {
-            return repo.findAll();
+            return accountDAL.getAccountList();
         }
 
     @Override
     public Account getAccountById(int accountId) {
 
-        return repo.findAll().get(accountId);
+        return accountDAL.getAccountById(accountId);
 
     }
 
     @Override
-    public void deleteAccount(Account account) {
+    public void deleteAccount(int accountId) {
 
-        repo.delete(account);
+        accountDAL.deleteAccount(accountId);
 
     }
 
     @Override
     public void addAccount(Account account) {
 
-        repo.save(account);
+        accountDAL.addAccount(account);
     }
 
     @Override
@@ -53,20 +52,15 @@ public class AccountService implements IAccountService {
         if (old == null) {
             return false;
         }
+        old.setFirstName(account.getFirstName());
+        old.setLastName(account.getLastName());
+        old.setLicensePlate(account.getLicensePlate());
+        old.setPhoneNumber(account.getPhoneNumber());
 
-        repo.save(account).setFirstName(account.getFirstName());
-        repo.save(account).setLastName(account.getLastName());
-        repo.save(account).setLicensePlate(account.getLicensePlate());
-        repo.save(account).setPhoneNumber(account.getPhoneNumber());
+        accountDAL.updateAccount(old);
 
         return true;
-
-
     }
-
-
-
-
 
 
 }

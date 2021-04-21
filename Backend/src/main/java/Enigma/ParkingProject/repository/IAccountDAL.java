@@ -1,10 +1,10 @@
-package Enigma.ParkingProject.serviceinterfaces;
+package Enigma.ParkingProject.repository;
 
 import Enigma.ParkingProject.model.Account;
 
 import java.util.List;
 
-public interface IAccountService {
+public interface IAccountDAL {
     List<Account> getAccountList();
 
     Account getAccountById(int accountId);
