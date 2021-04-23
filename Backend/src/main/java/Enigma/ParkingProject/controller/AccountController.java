@@ -19,7 +19,7 @@ import java.util.Optional;
 public class AccountController {
 
     @Autowired
-    private IAccountService accountService;
+    private IAccountService service;
 
 //    @GetMapping("{account}") //GET at http://localhost:XXXX/account/MS7878DSB
 //    public ResponseEntity<Account> getAccountPath(@PathVariable(value = "account") String licensePlate) {
@@ -34,7 +34,7 @@ public class AccountController {
 
     @GetMapping("{id}")
     public ResponseEntity<Account> getAccountPath(@PathVariable(value = "id") int id){
-        Account account = accountService.getAccountById(id);
+        Account account = service.getAccountById(id);
 
         if(account != null){
             return ResponseEntity.ok().body(account);
@@ -47,7 +47,7 @@ public class AccountController {
     //POST at http://localhost:XXXX/account
     public ResponseEntity<Account> createAccount(@RequestBody Account newAccount) {
 
-            accountService.addAccount(newAccount);
+            service.addAccount(newAccount);
             String url = "account" + "/" + newAccount.getLicensePlate(); // url of the created account
             URI uri = URI.create(url);
             return new ResponseEntity(uri,HttpStatus.CREATED);
@@ -58,7 +58,7 @@ public class AccountController {
     @PutMapping("{account}")
     //PUT at http://localhost:XXXX/account/{accountID}
     public ResponseEntity<Account> updateAccount(@PathVariable("account") int accountID,  @RequestParam("licenseplate") String LicensePlate, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("phone") String phoneNo) {
-        Account account = accountService.getAccountById(accountID);
+        Account account = service.getAccountById(accountID);
         if (account == null){
             return new ResponseEntity("Please provide a valid license plate.",HttpStatus.NOT_FOUND);
         }
@@ -75,7 +75,7 @@ public class AccountController {
     public ResponseEntity<List<Account>> getAllAccounts(@RequestParam(value = "accounts") Optional<String> licensePlate ) {
         List<Account> accounts = null;
 
-        accounts= accountService.getAccountList();
+        accounts= service.getAccountList();
 
 
         if(accounts != null) {
@@ -87,7 +87,7 @@ public class AccountController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deletePost(@PathVariable Account account) {
-        accountService.deleteAccount(account);
+        service.deleteAccount(account);
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();
 

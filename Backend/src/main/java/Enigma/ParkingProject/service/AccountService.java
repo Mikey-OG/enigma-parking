@@ -3,6 +3,7 @@ package Enigma.ParkingProject.service;
 import Enigma.ParkingProject.model.Account;
 import Enigma.ParkingProject.repository.IAccountRepository;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
+import dalinterfaces.IAccountDAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,39 +13,39 @@ import java.util.List;
 @Service
 public class AccountService implements IAccountService {
 
+
+        IAccountDAL dal;
+
         @Autowired
-         IAccountRepository repo;
-
-
-//        public AccountService(IAccountRepository IAccountRepository) {
-//            //this.IAccountRepository = IAccountRepository;
-//            this.repo = repo;
-//        }
+       public AccountService(IAccountDAL dal) {
+         //this.IAccountRepository = IAccountRepository;
+            this.dal = dal;
+       }
 
         @Override
         public List<Account> getAccountList()
         {
-            return repo.findAll();
+            return dal.getAccountList();
         }
 
     @Override
     public Account getAccountById(int accountId) {
 
-        return repo.findAll().get(accountId);
+        return dal.getAccountById(accountId);
 
     }
 
     @Override
     public void deleteAccount(Account account) {
 
-        repo.delete(account);
+        dal.deleteAccount(account);
 
     }
 
     @Override
     public void addAccount(Account account) {
 
-        repo.save(account);
+        dal.addAccount(account);
     }
 
     @Override
@@ -54,10 +55,11 @@ public class AccountService implements IAccountService {
             return false;
         }
 
-        repo.save(account).setFirstName(account.getFirstName());
+        /*repo.save(account).setFirstName(account.getFirstName());
         repo.save(account).setLastName(account.getLastName());
         repo.save(account).setLicensePlate(account.getLicensePlate());
-        repo.save(account).setPhoneNumber(account.getPhoneNumber());
+        repo.save(account).setPhoneNumber(account.getPhoneNumber());*/
+        dal.updateAccount(account);
 
         return true;
 

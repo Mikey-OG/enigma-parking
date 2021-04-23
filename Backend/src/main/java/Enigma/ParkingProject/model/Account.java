@@ -12,14 +12,15 @@ import java.util.Objects;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "accountID")
     private int accountId;
     @Column(name = "licenseplate")
     private String licensePlate;
-    @Column(name = "firstname")
+   @Column(name = "firstname")
     private String firstName;
-    @Column(name = "lastname")
+   @Column(name = "lastname")
     private String lastName;
-    @Column(name = "phonenumber")
+   @Column(name = "phonenumber")
     private String phoneNumber;
 
     public Account(int accountId, String licensePlate, String firstName, String lastName, String phoneNumber) {

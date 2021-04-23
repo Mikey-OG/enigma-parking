@@ -1,10 +1,8 @@
 package Enigma.ParkingProject.repository;
 
 import Enigma.ParkingProject.model.Account;
-import Enigma.ParkingProject.serviceinterfaces.IAccountService;
+import dalinterfaces.IAccountDAL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class DataStore {
+public class DataStore implements IAccountDAL {
 
     private final List<Account> accountList = new ArrayList<>();
 
-    @Autowired
+
     IAccountRepository repo;
 
-
-//    public DataStore(){
-//        this.repo = repo;
+     @Autowired
+     public DataStore(IAccountRepository repo){
+       this.repo = repo;
 //        accountList.add(new Account(1, "01-VBB-1", "Henk", "Broers", "+310623848125"));
 //        accountList.add(new Account(2, "92-HXK-9", "Sem", "de Jong", "+310624001200"));
 //        accountList.add(new Account(3, "25-BGD-2", "Daan", "Jansen", "+310622154985"));
@@ -38,14 +36,16 @@ public class DataStore {
 //        accountList.add(new Account(14, "T-93-MAE", "Jasmijn", "de Graaf", "+310662521816"));
 //        accountList.add(new Account(15, "01-MPO-2", "Willem", "Cox", "+310671189761"));
 //
-//    }
+    }
 
+    @Override
     public List<Account> getAccountList() {
         //return accountList;
         return repo.findAll();
     }
 
 
+    @Override
     public Account getAccountById(int accountId) {
         /*for (Account account : accountList) {
             if (account.getAccountId() == accountId)
@@ -66,6 +66,7 @@ public class DataStore {
        return repo.findB
     }*/
 
+    @Override
     public void deleteAccount(Account account) {
         /*Account account = getAccountById(id);
         if (account == null){
@@ -74,10 +75,13 @@ public class DataStore {
         return accountList.remove(account);*/
         repo.delete(account);
 
+
+
     }
 
 
 
+    @Override
     public void addAccount(Account account) {
         /*if (this.getAccountById(account.getAccountId()) != null){
             return false;
@@ -88,6 +92,7 @@ public class DataStore {
     }
 
 
+    @Override
     public boolean updateAccount(Account account) {
         Account old = this.getAccountById(account.getAccountId());
         if (old == null) {
