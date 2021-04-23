@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {Redirect, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Home from './Home';
-import AddClient from './AddClient';
+import AddGuest from './AddGuest';
 import GuestList from './GuestList';
-import EditClient from './EditClient';
+import EditGuest from './EditGuest';
 
 class App extends Component {
     state = {  }
@@ -15,8 +14,8 @@ class App extends Component {
                         <Redirect to="/home" />
                     </Route>
                     <Route path='/home' exact={true} component={GuestList}/>
-                    <Route path='/addclient' exact={true} component={AddClient}/>
-                    <Route path='/editclient/:id' component={EditClient}/>
+                    <Route path='/addGuest' exact={true} component={AddGuest}/>
+                    <Route path='/editGuest/:id' component={EditGuest}/>
                 </Switch>
             </Router>
          );
