@@ -33,12 +33,18 @@ class AppNav extends Component {
             <div>
                 <Navbar color="dark" dark expand="md">
                     <NavbarBrand href="/">Parking Manager</NavbarBrand>
-                    <Nav style={{position: 'absolute', left: '50%', transform: 'translate(-50%)'}} navbar>
+                    <Nav style={{position: 'absolute', left: '50%', transform: 'translate(-50%)', overflow: 'hidden'}} navbar>
                         <NavItem>
                             <NavLink href="/home">Home</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/addclient">Add Guest</NavLink>
+                            <NavLink href="/addGuest">Add Guest</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/calender">Calender</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/addAppointment">Add Appointment</NavLink>
                         </NavItem>
                     </Nav>
                     <Button size="sm" className="ml-auto" color="danger" onClick={() => this.openLogoutDialog()}>

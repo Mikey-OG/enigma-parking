@@ -1,15 +1,10 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import {Table, Button} from "reactstrap";
-import AppNav from "./AppNav";
+import AppNav from "../AppNav";
 import { Link } from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
 
 class GuestList extends Component {
-
-    // state = {
-    //     isLoading : true,
-    //     Guests : []
-    // }
 
     constructor(props){
         super(props);
@@ -18,7 +13,7 @@ class GuestList extends Component {
             isLoading: true,
             selectedGuest: [],
             showDeleteDialog: false,
-            Guests : []
+            guests : []
         };
 
         this.editGuest = this.editGuest.bind(this);
@@ -28,7 +23,7 @@ class GuestList extends Component {
     }
 
     editGuest(id){
-        this.props.history.push(`/editclient/${id}`);
+        this.props.history.push(`/editGuest/${id}`);
     }
 
     openDeleteDialog(guest){
@@ -49,15 +44,16 @@ class GuestList extends Component {
             'Content-Type' : 'application/json'
           }
         }).then(() => {
-          let updatedGuests = [...this.state.Guests].filter(i => i.id !== id);
-          this.setState({Guests : updatedGuests});
+          let updatedGuests = [...this.state.guests].filter(i => i.id !== id);
+          this.setState({guests : updatedGuests});
+          this.refreshPage();
         });
     }
 
     async componentDidMount(){
         const response = await fetch('/account');
         const body = await response.json();
-        this.setState({Guests :body , isLoading: false});
+        this.setState({guests :body , isLoading: false});
         console.log(body);
     }
 
@@ -66,20 +62,20 @@ class GuestList extends Component {
     }
 
     render() {
-        const {Guests , isLoading, showDeleteDialog, selectedGuest} = this.state;
+        const {guests , isLoading, showDeleteDialog, selectedGuest} = this.state;
 
         if (isLoading)
             return(<div>Loading...</div>)
 
         let rows=
-            Guests.map(guest =>
+            guests.map(guest =>
                 <tr id={guest.accountId}>
                     <td>{guest.firstName}</td>
                     <td>{guest.lastName}</td>
                     <td>{guest.licensePlate}</td>
                     <td>{guest.phoneNumber}</td>
                     <td><Button size="sm" color="primary" onClick={() => this.editGuest(guest.accountId)}>Edit</Button>
-                        <a> </a>
+                        <text> </text>
                         <Button size="sm" color="danger" onClick={() => this.openDeleteDialog(guest)}>Delete</Button></td>
                 </tr>
             );

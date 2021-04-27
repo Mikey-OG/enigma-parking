@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {Redirect, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Home from './Home';
-import AddClient from './AddClient';
-import GuestList from './GuestList';
-import EditClient from './EditClient';
+import "react-datetime/css/react-datetime.css";
+import AddGuest from './Guests/AddGuest';
+import GuestList from './Guests/GuestList';
+import EditGuest from './Guests/EditGuest';
+import AddAppointment from './Appointments/AddAppointment';
+import EditAppointment from './Appointments/EditAppointment';
 
 class App extends Component {
     state = {  }
@@ -15,8 +17,10 @@ class App extends Component {
                         <Redirect to="/home" />
                     </Route>
                     <Route path='/home' exact={true} component={GuestList}/>
-                    <Route path='/addclient' exact={true} component={AddClient}/>
-                    <Route path='/editclient/:id' component={EditClient}/>
+                    <Route path='/addGuest' exact={true} component={AddGuest}/>
+                    <Route path='/editGuest/:id' component={EditGuest}/>
+                    <Route path='/addAppointment' exact={true} component={AddAppointment}/>
+                    <Route path='/editAppointment/:id' component={EditAppointment}/>
                 </Switch>
             </Router>
          );

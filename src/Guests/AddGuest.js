@@ -1,97 +1,79 @@
-import React, { Component } from 'react'
-import AppNav from "./AppNav";
-import './App.css';
+import React, { Component } from 'react';
+import AppNav from '../AppNav';
+import '../App.css';
 import { Container, Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-export default class EditClient extends Component {
-    
-    emptyItem={
-        accountId: this.props.match.params.id,
+class AddGuest extends Component {
+
+    emptyGuest={
+        accountId: '',
         licensePlate: '',
         firstName: '',
         lastName: '',
         phoneNumber: ''
-    }
+    };
 
     constructor(props){
-        super(props)
+        super(props);
 
         this.state = {
-            isLoading: true,
-            AddClient: [],
-            item: this.emptyItem
-        }
+            guest: this.emptyGuest
+        };
 
         this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange= this.handleChange.bind(this);
     }
 
     async handleSubmit(event){
-        const item = this.state.item;
+        event.preventDefault();
+        const guest = this.state.guest;
         await fetch('/account', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(item),
-        });        
-        //console.log(this.state);
-        event.preventDefault();
-        this.props.history.push("/account");
+            body: JSON.stringify(guest),
+        }).then((response) => {if (response.status === 201) {
+            this.props.history.push("/home");
+        }});
     }
 
     handleChange(event){
-        const target= event.target;
-        const value= target.value;
+        const target = event.target;
+        const value = target.value;
         const name = target.name;
-        let item={...this.state.item};
-        item[name] = value;
-        this.setState({item});
-        console.log(item);
+        let guest={...this.state.guest};
+        guest[name] = value;
+        this.setState({guest});
+        console.log(guest);
     }
 
-    async componentDidMount() {
-
-        const responseAddC = await fetch('/account');
-        const bodyAddC = await responseAddC.json();
-        this.setState({AddClient : bodyAddC, isLoading: false});
-        console.log(bodyAddC);
-    }
-
-    
     render() { 
-
-        const {AddClient, isLoading} = this.state;
-
-        if (isLoading)
-            return(<div>Loading...</div>)
-
-        return ( 
+        return (
             <div><AppNav/>
                 <h2 className="text-center mt-5">Add Guest</h2>
                 <div className="container">
                     <div className="row">
-                        <div className="col"></div>
+                        <div className="col"/>
                         <div className="col">
                             <Container className="mt-5">
                                 <Form onSubmit={this.handleSubmit}>
                                     <FormGroup>
-                                        <Label for="licensePlate">License Plate</Label>
-                                        <Input type="text" name="licensePlate" id="licensePlate" onChange={this.handleChange}></Input>
-                                    </FormGroup>
-                                    <FormGroup>
                                         <Label for="firstName">First Name</Label>
-                                        <Input type="text" name="firstName" id="firstName" onChange={this.handleChange}></Input>
+                                        <Input type="text" name="firstName" id="firstName" onChange={this.handleChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="lastName">Last Name</Label>
-                                        <Input type="text" name="lastName" id="lastName" onChange={this.handleChange}></Input>
+                                        <Input type="text" name="lastName" id="lastName" onChange={this.handleChange}/>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="licensePlate">License Plate</Label>
+                                        <Input type="text" name="licensePlate" id="licensePlate" onChange={this.handleChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="phoneNumber">Phone Number</Label>
-                                        <Input type="text" name="phoneNumber" id="phoneNumber" onChange={this.handleChange}></Input>
+                                        <Input type="text" name="phoneNumber" id="phoneNumber" onChange={this.handleChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit" >Save</Button>{' '}
@@ -100,9 +82,11 @@ export default class EditClient extends Component {
                                 </Form>
                             </Container>
                         </div>
-                        <div className="col"></div>
+                        <div className="col"/>
                     </div>
                 </div>
             </div> );
     }
 }
+
+export default AddGuest;
