@@ -1,5 +1,6 @@
-package Enigma.ParkingProject.service;
+package Enigma.ParkingProject.security;
 
+import Enigma.ParkingProject.service.myUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -8,19 +9,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@EnableWebSecurity
-public class SecurityConf extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private myUserDetailsService myUserDetService;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetService);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
-}
+//@EnableWebSecurity
+//public class SecurityConf extends WebSecurityConfigurerAdapter {
+//
+//    @Autowired
+//    private myUserDetailsService myUserDetService;
+//
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(myUserDetService);
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return NoOpPasswordEncoder.getInstance();
+//    }
+//}

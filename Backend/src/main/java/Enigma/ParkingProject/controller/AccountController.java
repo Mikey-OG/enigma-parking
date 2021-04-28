@@ -1,14 +1,24 @@
 package Enigma.ParkingProject.controller;
 
 import Enigma.ParkingProject.model.Account;
+import Enigma.ParkingProject.model.AuthRequest;
+import Enigma.ParkingProject.model.AuthResponse;
 import Enigma.ParkingProject.repository.DataStore;
+import Enigma.ParkingProject.security.JwtUtil;
 import Enigma.ParkingProject.service.Sms;
+import Enigma.ParkingProject.service.myUserDetailsService;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -104,8 +114,5 @@ public class AccountController {
         Sms sms = new Sms();
         sms.SendSmsParkingFull();
     }
-
-
-
 
 }
