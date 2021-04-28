@@ -12,7 +12,50 @@ public class Appointment {
     private int appointmentId;
     @Column(name = "guestId")
     private int guestId;
+    @Column(name = "emailEmployee")
+    private String employeeEmail;
     @Column(name = "appointmentDate")
     private Date appointmentDate;
 
+    public Appointment() {
+    }
+
+    public Appointment(int appointmentId, int guestId, String employeeEmail, Date appointmentDate) {
+        this.appointmentId = appointmentId;
+        this.guestId = guestId;
+        this.employeeEmail = employeeEmail;
+        this.appointmentDate = appointmentDate;
+    }
+
+    public int getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public int getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+
+    public String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
+    }
+
+    public Date getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
 }

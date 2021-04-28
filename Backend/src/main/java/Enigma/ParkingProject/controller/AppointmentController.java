@@ -26,6 +26,19 @@ public class AppointmentController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("{id}")
+    public ResponseEntity<Appointment> getAppointment(@PathVariable int id)
+    {
+        Appointment appointment = appointmentService.getAppointmentById(id);
+        if(appointment == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            return ResponseEntity.ok().body(appointment);
+        }
+    }
     @PostMapping()
     public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment newAppointment)
     {
