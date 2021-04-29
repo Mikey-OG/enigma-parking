@@ -28,8 +28,11 @@ export default class EditGuest extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(guest),
+        }).then((response) => {
+            if (response.status === 200 || response.status === 201) {
+                this.props.history.push("/home");
+            }
         });
-        this.props.history.push("/home");
     }
 
     handleChange(event) {
@@ -39,7 +42,6 @@ export default class EditGuest extends Component {
         let guest = {...this.state.guest};
         guest[name] = value;
         this.setState({guest});
-        console.log(guest);
     }
 
     async componentDidMount() {

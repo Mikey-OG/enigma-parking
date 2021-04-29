@@ -29,7 +29,7 @@ class AddAppointment extends Component {
 
     emptyAppointment = {
         guestId: '',
-        emailEmployee: '',
+        employeeEmail: '',
         appointmentDate: '',
     };
 
@@ -57,10 +57,12 @@ class AddAppointment extends Component {
             },
             body: JSON.stringify(appointment),
         }).then((response) => {
-            if (response.status === 201) {
+            console.log(response);
+            if (response.status === 200 || response.status === 201) {
                 this.props.history.push("/calender");
             }
         });
+
     }
 
     handleInputChange(event) {
@@ -76,6 +78,7 @@ class AddAppointment extends Component {
         let appointment = {...this.state.appointment};
         appointment.appointmentDate = date.toDate();
         this.setState({appointment});
+        console.log(appointment)
     }
 
     handleSuggestionChange = (event, {newValue}) => {
@@ -140,13 +143,15 @@ class AddAppointment extends Component {
                                         />
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="emailEmployee">Email of Employee</Label>
-                                        <Input type="text" name="emailEmployee" id="emailEmployee"
+                                        <Label for="employeeEmail">Email of Employee</Label>
+                                        <Input type="email" name="employeeEmail" id="employeeEmail"
                                                onChange={this.handleInputChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="appointmentDate">Appointment Date</Label>
                                         <Datetime type="text" name="appointmentDate" id="appointmentDate"
+                                                  inputProps={{readOnly: true}}
+                                                  timeFormat="HH:mm"
                                                   onChange={this.handleDatetimeChange}/>
                                     </FormGroup>
                                     <FormGroup>
