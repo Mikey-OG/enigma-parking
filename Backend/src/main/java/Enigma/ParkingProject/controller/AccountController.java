@@ -2,6 +2,8 @@ package Enigma.ParkingProject.controller;
 
 import Enigma.ParkingProject.model.Account;
 import Enigma.ParkingProject.repository.DataStore;
+import Enigma.ParkingProject.service.MailService;
+import Enigma.ParkingProject.service.NotificationService;
 import Enigma.ParkingProject.service.Sms;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,9 @@ public class AccountController {
 
     @Autowired
     private IAccountService service;
+
+    @Autowired
+    private MailService email;
 
 //    @GetMapping("{account}") //GET at http://localhost:XXXX/account/MS7878DSB
 //    public ResponseEntity<Account> getAccountPath(@PathVariable(value = "account") String licensePlate) {
@@ -105,7 +111,19 @@ public class AccountController {
         sms.SendSmsParkingFull();
     }
 
+    @RequestMapping("/Email")
+    public void Email() {
+        email.sendEmail("lucmoonen@live.nl");
+    }
 
-
+    @RequestMapping("/notification")
+    public void Notification() throws AWTException {
+        if (SystemTray.isSupported()) {
+            NotificationService td = new NotificationService();
+            td.displayTray();
+        } else {
+            System.err.println("System tray not supported!");
+        }
+    }
 
 }
