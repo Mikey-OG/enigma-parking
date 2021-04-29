@@ -20,7 +20,7 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(int appointmentId, int guestId, String employeeEmail, Date appointmentDate) {
+    public Appointment(int appointmentId, int guestId, String employeeEmail, String appointmentDate) {
         this.appointmentId = appointmentId;
         this.guestId = guestId;
         this.employeeEmail = employeeEmail;
@@ -51,11 +51,11 @@ public class Appointment {
         this.employeeEmail = employeeEmail;
     }
 
-    public Date getAppointmentDate() {
+    public String getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(Date appointmentDate) {
+    public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 }
