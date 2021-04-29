@@ -15,7 +15,7 @@ public class Appointment {
     @Column(name = "emailEmployee")
     private String employeeEmail;
     @Column(name = "appointmentDate")
-    private Date appointmentDate;
+    private String appointmentDate;
 
     public Appointment() {
     }
