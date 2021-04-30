@@ -28,6 +28,7 @@ const renderSuggestion = suggestion => (
 class AddAppointment extends Component {
 
     emptyAppointment = {
+        appointmentId: '',
         guestId: '',
         employeeEmail: '',
         appointmentDate: '',
@@ -59,7 +60,7 @@ class AddAppointment extends Component {
         }).then((response) => {
             console.log(response);
             if (response.status === 200 || response.status === 201) {
-                this.props.history.push("/calender");
+                this.props.history.push("/calendar");
             }
         });
 
@@ -151,6 +152,7 @@ class AddAppointment extends Component {
                                         <Label for="appointmentDate">Appointment Date</Label>
                                         <Datetime type="text" name="appointmentDate" id="appointmentDate"
                                                   inputProps={{readOnly: true}}
+                                                  locale={'en'}
                                                   timeFormat="HH:mm"
                                                   onChange={this.handleDatetimeChange}/>
                                     </FormGroup>

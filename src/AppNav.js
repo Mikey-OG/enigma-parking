@@ -41,7 +41,7 @@ class AppNav extends Component {
                             <NavLink href="/addGuest">Add Guest</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/calender">Calender</NavLink>
+                            <NavLink href="/calendar">Calendar</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink href="/addAppointment">Add Appointment</NavLink>

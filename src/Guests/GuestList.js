@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Table, Button} from "reactstrap";
 import AppNav from "../AppNav";
-import {Link} from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
 
 class GuestList extends Component {
@@ -44,9 +43,11 @@ class GuestList extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(() => {
-            let updatedGuests = [...this.state.guests].filter(i => i.id !== id);
-            this.setState({guests: updatedGuests});
-            this.refreshPage();
+            let updatedGuests = this.state.guests;
+            updatedGuests.splice(updatedGuests.findIndex(function(i){
+                return i.accountId === id;
+            }), 1);
+            this.setState({guests: updatedGuests, showDeleteDialog: false});
         });
     }
 
@@ -54,10 +55,6 @@ class GuestList extends Component {
         const response = await fetch('/account');
         const body = await response.json();
         this.setState({guests: body, isLoading: false});
-    }
-
-    refreshPage() {
-        window.location.reload(false);
     }
 
     render() {
@@ -83,7 +80,7 @@ class GuestList extends Component {
         return (
             <div><AppNav/>
                 <h2 className="text-center mt-5">Guest List</h2>
-                <div style={{position: 'absolute', left: '54%', transform: 'translate(-46%)'}} className="container">
+                <div className="container">
                     <div className="row">
                         <div className="col-1"></div>
                         <div className="col-10">
@@ -110,7 +107,7 @@ class GuestList extends Component {
                     <Modal.Body>Are you sure you want to delete this guest?<br/>
                         {selectedGuest.firstName} {selectedGuest.lastName}</Modal.Body>
                     <Modal.Footer>
-                        <Button color="danger" onClick={() => this.deleteGuest()} tag={Link} to="/">
+                        <Button color="danger" onClick={() => this.deleteGuest()}>
                             Delete
                         </Button>
                         <Button color="primary" onClick={() => this.closeDeleteDialog()}>
