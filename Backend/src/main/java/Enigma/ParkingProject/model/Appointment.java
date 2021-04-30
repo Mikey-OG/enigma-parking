@@ -13,17 +13,21 @@ public class Appointment {
     private int guestId;
     @Column(name = "emailEmployee")
     private String employeeEmail;
-    @Column(name = "appointmentDate")
-    private String appointmentDate;
+    @Column(name = "appointmentStartDate")
+    private String appointmentStartDate;
+    @Column(name = "appointmentEndDate")
+    private String appointmentEndDate;
 
     public Appointment() {
     }
 
-    public Appointment(int appointmentId, int guestId, String employeeEmail, String appointmentDate) {
+
+    public Appointment(int appointmentId, int guestId, String employeeEmail, String appointmentStartDate, String appointmentEndDate) {
         this.appointmentId = appointmentId;
         this.guestId = guestId;
         this.employeeEmail = employeeEmail;
-        this.appointmentDate = appointmentDate;
+        this.appointmentStartDate = appointmentStartDate;
+        this.appointmentEndDate = appointmentEndDate;
     }
 
     public int getAppointmentId() {
@@ -50,11 +54,19 @@ public class Appointment {
         this.employeeEmail = employeeEmail;
     }
 
-    public String getAppointmentDate() {
-        return appointmentDate;
+    public String getAppointmentStartDate() {
+        return appointmentStartDate;
     }
 
-    public void setAppointmentDate(String appointmentDate) {
-        this.appointmentDate = appointmentDate;
+    public void setAppointmentStartDate(String appointmentStartDate) {
+        this.appointmentStartDate = appointmentStartDate;
+    }
+
+    public String getAppointmentEndDate() {
+        return appointmentEndDate;
+    }
+
+    public void setAppointmentEndDate(String appointmentEndDate) {
+        this.appointmentEndDate = appointmentEndDate;
     }
 }
