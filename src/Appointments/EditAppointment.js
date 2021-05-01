@@ -38,7 +38,8 @@ class EditAppointment extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleDatetimeChange = this.handleDatetimeChange.bind(this);
+        this.handleStartDatetimeChange = this.handleStartDatetimeChange.bind(this);
+        this.handleEndDatetimeChange = this.handleEndDatetimeChange.bind(this);
     }
 
     async handleSubmit(event) {
@@ -66,9 +67,15 @@ class EditAppointment extends Component {
         this.setState({appointment});
     }
 
-    handleDatetimeChange(date) {
+    handleStartDatetimeChange(date) {
         let appointment = {...this.state.appointment};
         appointment.appointmentStartDate = date.toDate();
+        this.setState({appointment});
+    }
+
+    handleEndDatetimeChange(date) {
+        let appointment = {...this.state.appointment};
+        appointment.appointmentEndDate = date.toDate();
         this.setState({appointment});
     }
 
@@ -87,7 +94,6 @@ class EditAppointment extends Component {
         let guest = guests.find(a => a.accountId === body.guestId);
         let value = guest.firstName + " " + guest.lastName;
         this.setState({value: value, appointment: body, isLoading: false});
-        console.log(body);
     }
 
     onSuggestionsFetchRequested = ({value}) => {
@@ -150,7 +156,7 @@ class EditAppointment extends Component {
                                                   inputProps={{readOnly: true}}
                                                   locale={'nl'}
                                                   timeFormat="HH:mm"
-                                                  onChange={this.handleDatetimeChange}/>
+                                                  onChange={this.handleStartDatetimeChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="appointmentEndDate">Appointment End Date</Label>
@@ -158,7 +164,7 @@ class EditAppointment extends Component {
                                                   inputProps={{readOnly: true}}
                                                   locale={'nl'}
                                                   timeFormat="HH:mm"
-                                                  onChange={this.handleDatetimeChange}/>
+                                                  onChange={this.handleEndDatetimeChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit">Save</Button>{' '}

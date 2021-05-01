@@ -81,14 +81,12 @@ class AddAppointment extends Component {
         let appointment = {...this.state.appointment};
         appointment.appointmentStartDate = date.toDate();
         this.setState({appointment});
-        console.log(appointment)
     }
 
     handleEndDatetimeChange(date) {
         let appointment = {...this.state.appointment};
         appointment.appointmentEndDate = date.toDate();
         this.setState({appointment});
-        console.log(appointment)
     }
 
     handleSuggestionChange = (event, {newValue}) => {
