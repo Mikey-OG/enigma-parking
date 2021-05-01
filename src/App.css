@@ -107,3 +107,21 @@ body {
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
 }
+
+.modal-backdrop {
+  z-index: -1;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-backdrop.fade.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.agenda__table.\--body {
+  height: calc(84vh - 64px) ! important;
+  -webkit-transform: translateZ(0);
+}

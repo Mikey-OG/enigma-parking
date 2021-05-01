@@ -51,7 +51,7 @@ class EditAppointment extends Component {
             },
             body: JSON.stringify(appointment),
         }).then((response) => {
-            if (response.status === 200 || response.status === 201) {
+            if (response.ok) {
                 this.props.history.push("/calendar");
             }
         });
@@ -68,7 +68,7 @@ class EditAppointment extends Component {
 
     handleDatetimeChange(date) {
         let appointment = {...this.state.appointment};
-        appointment.appointmentDate = date.toDate();
+        appointment.appointmentStartDate = date.toDate();
         this.setState({appointment});
     }
 
@@ -145,10 +145,18 @@ class EditAppointment extends Component {
                                                onChange={this.handleInputChange}/>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="appointmentDate">Appointment Date</Label>
-                                        <Datetime type="text" name="appointmentDate" id="appointmentDate" value={new Date(appointment.appointmentDate)}
+                                        <Label for="appointmentStartDate">Appointment Start Date</Label>
+                                        <Datetime type="text" name="appointmentStartDate" id="appointmentStartDate" value={new Date(appointment.appointmentStartDate)}
                                                   inputProps={{readOnly: true}}
-                                                  locale={'en'}
+                                                  locale={'nl'}
+                                                  timeFormat="HH:mm"
+                                                  onChange={this.handleDatetimeChange}/>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="appointmentEndDate">Appointment End Date</Label>
+                                        <Datetime type="text" name="appointmentEndDate" id="appointmentEndDate" value={new Date(appointment.appointmentEndDate)}
+                                                  inputProps={{readOnly: true}}
+                                                  locale={'nl'}
                                                   timeFormat="HH:mm"
                                                   onChange={this.handleDatetimeChange}/>
                                     </FormGroup>

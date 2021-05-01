@@ -52,18 +52,20 @@ class Calendar extends Component {
 
         let appointments = [];
 
-        body.forEach(function (item) {
-                var appointment = {};
-                let guest = guests.find(a => a.accountId === item.guestId);
-                appointment._id = item.appointmentId;
-                appointment.name = 'Appointment with ' + guest.firstName + ' ' + guest.lastName;
-                appointment.startDateTime = new Date(item.appointmentDate);
-                appointment.endDateTime = new Date(appointment.startDateTime.getFullYear(), appointment.startDateTime.getMonth(), appointment.startDateTime.getDate(), appointment.startDateTime.getHours() + 2, appointment.startDateTime.getMinutes());
-                appointment.classes = 'color-1';
+        if (response.ok) {
+            body.forEach(function (item) {
+                    var appointment = {};
+                    let guest = guests.find(a => a.accountId === item.guestId);
+                    appointment._id = item.appointmentId;
+                    appointment.name = 'Appointment with ' + guest.firstName + ' ' + guest.lastName;
+                    appointment.startDateTime = new Date(item.appointmentStartDate);
+                    appointment.endDateTime = new Date(item.appointmentEndDate);
+                    appointment.classes = 'color-1';
 
-                appointments.push(appointment)
-            }
-        );
+                    appointments.push(appointment)
+                }
+            );
+        }
 
         this.setState({
             appointments: appointments,
@@ -75,7 +77,7 @@ class Calendar extends Component {
     getMonday() {
         let date = new Date();
         let day = date.getDay(),
-            diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
         return new Date(date.setDate(diff));
     }
 
@@ -105,7 +107,7 @@ class Calendar extends Component {
             }
         }).then(() => {
             let updatedAppointments = this.state.appointments;
-            updatedAppointments.splice(updatedAppointments.findIndex(function(i){
+            updatedAppointments.splice(updatedAppointments.findIndex(function (i) {
                 return i._id === id;
             }), 1);
             this.setState({appointments: updatedAppointments, showDeleteDialog: false});
@@ -150,7 +152,8 @@ class Calendar extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </div>);
+            </div>
+        );
     }
 }
 

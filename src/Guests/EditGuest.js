@@ -29,7 +29,7 @@ export default class EditGuest extends Component {
             },
             body: JSON.stringify(guest),
         }).then((response) => {
-            if (response.status === 200 || response.status === 201) {
+            if (response.ok) {
                 this.props.history.push("/home");
             }
         });

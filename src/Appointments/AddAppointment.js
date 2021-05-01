@@ -31,7 +31,8 @@ class AddAppointment extends Component {
         appointmentId: '',
         guestId: '',
         employeeEmail: '',
-        appointmentDate: '',
+        appointmentStartDate: '',
+        appointmentEndDate: ''
     };
 
     constructor(props) {
@@ -45,7 +46,8 @@ class AddAppointment extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleDatetimeChange = this.handleDatetimeChange.bind(this);
+        this.handleStartDatetimeChange = this.handleStartDatetimeChange.bind(this);
+        this.handleEndDatetimeChange = this.handleEndDatetimeChange.bind(this);
     }
 
     async handleSubmit(event) {
@@ -59,7 +61,7 @@ class AddAppointment extends Component {
             body: JSON.stringify(appointment),
         }).then((response) => {
             console.log(response);
-            if (response.status === 200 || response.status === 201) {
+            if (response.ok) {
                 this.props.history.push("/calendar");
             }
         });
@@ -75,9 +77,16 @@ class AddAppointment extends Component {
         this.setState({appointment});
     }
 
-    handleDatetimeChange(date) {
+    handleStartDatetimeChange(date) {
         let appointment = {...this.state.appointment};
-        appointment.appointmentDate = date.toDate();
+        appointment.appointmentStartDate = date.toDate();
+        this.setState({appointment});
+        console.log(appointment)
+    }
+
+    handleEndDatetimeChange(date) {
+        let appointment = {...this.state.appointment};
+        appointment.appointmentEndDate = date.toDate();
         this.setState({appointment});
         console.log(appointment)
     }
@@ -149,12 +158,20 @@ class AddAppointment extends Component {
                                                onChange={this.handleInputChange}/>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="appointmentDate">Appointment Date</Label>
-                                        <Datetime type="text" name="appointmentDate" id="appointmentDate"
+                                        <Label for="appointmentStartDate">Appointment Start Date</Label>
+                                        <Datetime type="text" name="appointmentStartDate" id="appointmentStartDate"
                                                   inputProps={{readOnly: true}}
-                                                  locale={'en'}
+                                                  locale={'nl'}
                                                   timeFormat="HH:mm"
-                                                  onChange={this.handleDatetimeChange}/>
+                                                  onChange={this.handleStartDatetimeChange}/>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="appointmentEndDate">Appointment End Date</Label>
+                                        <Datetime type="text" name="appointmentEndDate" id="appointmentEndDate"
+                                                  inputProps={{readOnly: true}}
+                                                  locale={'nl'}
+                                                  timeFormat="HH:mm"
+                                                  onChange={this.handleEndDatetimeChange}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit">Save</Button>{' '}
