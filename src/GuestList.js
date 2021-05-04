@@ -1,10 +1,15 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {Table, Button} from "reactstrap";
 import AppNav from "./AppNav";
 import { Link } from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
 
 class GuestList extends Component {
+
+    // state = {
+    //     isLoading : true,
+    //     Guests : []
+    // }
 
     constructor(props){
         super(props);
@@ -23,7 +28,7 @@ class GuestList extends Component {
     }
 
     editGuest(id){
-        this.props.history.push(`/editGuest/${id}`);
+        this.props.history.push(`/editclient/${id}`);
     }
 
     openDeleteDialog(guest){
@@ -46,7 +51,6 @@ class GuestList extends Component {
         }).then(() => {
           let updatedGuests = [...this.state.Guests].filter(i => i.id !== id);
           this.setState({Guests : updatedGuests});
-          this.refreshPage();
         });
     }
 
@@ -64,8 +68,8 @@ class GuestList extends Component {
     render() {
         const {Guests , isLoading, showDeleteDialog, selectedGuest} = this.state;
 
-        //if (isLoading)
-            //return(<div>Loading...</div>)
+        if (isLoading)
+            return(<div>Loading...</div>)
 
         let rows=
             Guests.map(guest =>
@@ -75,7 +79,7 @@ class GuestList extends Component {
                     <td>{guest.licensePlate}</td>
                     <td>{guest.phoneNumber}</td>
                     <td><Button size="sm" color="primary" onClick={() => this.editGuest(guest.accountId)}>Edit</Button>
-                        <text> </text>
+                        <a> </a>
                         <Button size="sm" color="danger" onClick={() => this.openDeleteDialog(guest)}>Delete</Button></td>
                 </tr>
             );
