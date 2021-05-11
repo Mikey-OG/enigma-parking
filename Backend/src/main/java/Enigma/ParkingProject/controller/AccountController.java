@@ -3,6 +3,7 @@ package Enigma.ParkingProject.controller;
 import Enigma.ParkingProject.model.Account;
 import Enigma.ParkingProject.repository.DataStore;
 import Enigma.ParkingProject.service.Sms;
+import Enigma.ParkingProject.service.Whatsapp;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -103,6 +104,18 @@ public class AccountController {
     public void smsFull() {
         Sms sms = new Sms();
         sms.SendSmsParkingFull();
+    }
+
+    @RequestMapping("/whatsappAvailable")
+    public void whatsappAvailable() {
+        Whatsapp whatsapp = new Whatsapp();
+        whatsapp.WhatsappParkingAvailable();
+    }
+
+    @RequestMapping("/whatsappFull")
+    public void whatsappFull() {
+        Whatsapp whatsapp = new Whatsapp();
+        whatsapp.WhatsappParkingFull();
     }
 
 
