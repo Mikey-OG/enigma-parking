@@ -9,7 +9,7 @@ public interface IAccountDAL {
 
     Account getAccountById(int accountId);
 
-    void deleteAccount(int account);
+    void deleteAccount(int accountId);
 
     void addAccount(Account account);
 

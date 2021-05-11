@@ -40,6 +40,12 @@ class AppNav extends Component {
                         <NavItem>
                             <NavLink href="/addGuest">Add Guest</NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink href="/calendar">Calendar</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/addAppointment">Add Appointment</NavLink>
+                        </NavItem>
                     </Nav>
                     <Button size="sm" className="ml-auto" color="danger" onClick={() => this.openLogoutDialog()}>
                         Logout

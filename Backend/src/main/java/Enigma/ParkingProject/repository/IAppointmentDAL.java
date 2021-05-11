@@ -14,3 +14,4 @@ public interface IAppointmentDAL
 
     void deleteAppointment(int id);
 }
+

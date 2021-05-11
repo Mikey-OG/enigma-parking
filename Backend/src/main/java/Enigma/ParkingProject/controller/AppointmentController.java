@@ -54,4 +54,6 @@ public class AppointmentController {
         appointmentService.deleteAppointment(id);
         return ResponseEntity.ok().build();
     }
+
 }
+

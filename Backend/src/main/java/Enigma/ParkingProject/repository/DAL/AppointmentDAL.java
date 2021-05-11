@@ -1,6 +1,7 @@
 package Enigma.ParkingProject.repository.DAL;
 
 import Enigma.ParkingProject.model.Appointment;
+
 import Enigma.ParkingProject.repository.IAppointmentDAL;
 import Enigma.ParkingProject.repository.IAppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

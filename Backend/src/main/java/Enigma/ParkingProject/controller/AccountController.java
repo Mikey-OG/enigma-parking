@@ -1,6 +1,7 @@
 package Enigma.ParkingProject.controller;
 
 import Enigma.ParkingProject.model.Account;
+
 import Enigma.ParkingProject.service.WhatsappService;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,7 @@ public class AccountController {
     public ResponseEntity deletePost(@PathVariable("id") int id) {
 
         accountService.deleteAccount(id);
+
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();
     }

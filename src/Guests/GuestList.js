@@ -1,19 +1,18 @@
 import React, {Component} from "react";
 import {Table, Button} from "reactstrap";
-import AppNav from "./AppNav";
-import { Link } from 'react-router-dom';
+import AppNav from "../AppNav";
 import Modal from "react-bootstrap/Modal";
 
 class GuestList extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             isLoading: true,
             selectedGuest: [],
             showDeleteDialog: false,
-            Guests : []
+            guests: []
         };
 
         this.editGuest = this.editGuest.bind(this);
@@ -22,84 +21,80 @@ class GuestList extends Component {
         this.closeDeleteDialog = this.closeDeleteDialog.bind(this);
     }
 
-    editGuest(id){
+    editGuest(id) {
         this.props.history.push(`/editGuest/${id}`);
     }
 
-    openDeleteDialog(guest){
+    openDeleteDialog(guest) {
         this.setState({selectedGuest: guest});
         this.setState({showDeleteDialog: true});
     }
 
-    closeDeleteDialog(){
+    closeDeleteDialog() {
         this.setState({showDeleteDialog: false});
     }
 
-    async deleteGuest(){
+    async deleteGuest() {
         const id = this.state.selectedGuest.accountId;
         await fetch(`/account/${id}`, {
-          method: 'DELETE',
-          headers : {
-            'Accept' : 'application/json',
-            'Content-Type' : 'application/json'
-          }
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         }).then(() => {
-          let updatedGuests = [...this.state.Guests].filter(i => i.id !== id);
-          this.setState({Guests : updatedGuests});
-          this.refreshPage();
+            let updatedGuests = this.state.guests;
+            updatedGuests.splice(updatedGuests.findIndex(function(i){
+                return i.accountId === id;
+            }), 1);
+            this.setState({guests: updatedGuests, showDeleteDialog: false});
         });
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         const response = await fetch('/account');
         const body = await response.json();
-        this.setState({Guests :body , isLoading: false});
-        console.log(body);
-    }
-
-    refreshPage() {
-        window.location.reload(false);
+        this.setState({guests: body, isLoading: false});
     }
 
     render() {
-        const {Guests , isLoading, showDeleteDialog, selectedGuest} = this.state;
+        const {guests, isLoading, showDeleteDialog, selectedGuest} = this.state;
 
-        //if (isLoading)
-            //return(<div>Loading...</div>)
+        if (isLoading)
+            return (<div>Loading...</div>)
 
-        let rows=
-            Guests.map(guest =>
+        let rows =
+            guests.map(guest =>
                 <tr id={guest.accountId}>
                     <td>{guest.firstName}</td>
                     <td>{guest.lastName}</td>
                     <td>{guest.licensePlate}</td>
                     <td>{guest.phoneNumber}</td>
-                    <td><Button size="sm" color="primary" onClick={() => this.editGuest(guest.accountId)}>Edit</Button>
-                        <text> </text>
-                        <Button size="sm" color="danger" onClick={() => this.openDeleteDialog(guest)}>Delete</Button></td>
+                    <td><Button style={{marginRight: '10px'}} size="sm" color="primary"
+                                onClick={() => this.editGuest(guest.accountId)}>Edit</Button>
+                        <Button size="sm" color="danger" onClick={() => this.openDeleteDialog(guest)}>Delete</Button>
+                    </td>
                 </tr>
             );
 
         return (
             <div><AppNav/>
                 <h2 className="text-center mt-5">Guest List</h2>
-                <div style={{position: 'absolute', left: '54%', transform: 'translate(-46%)'}} className="container">
+                <div className="container">
                     <div className="row">
                         <div className="col-1"></div>
-                        <div className="col-10">                    
+                        <div className="col-10">
                             <Table className="mt-4">
-                                <thread>
-                                    <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>License Plate</th>
-                                        <th>Telephone Number</th>
-                                        <th>Options</th>
-                                    </tr>
-                                    <tbody>
-                                        {rows}
-                                    </tbody>
-                                </thread>
+                                <tbody>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>License Plate</th>
+                                    <th>Telephone Number</th>
+                                    <th>Options</th>
+                                </tr>
+                                {rows}
+                                </tbody>
                             </Table>
                         </div>
                         <div className="col-1"></div>
@@ -112,7 +107,7 @@ class GuestList extends Component {
                     <Modal.Body>Are you sure you want to delete this guest?<br/>
                         {selectedGuest.firstName} {selectedGuest.lastName}</Modal.Body>
                     <Modal.Footer>
-                        <Button color="danger" onClick={() => this.deleteGuest()} tag={Link} to="/">
+                        <Button color="danger" onClick={() => this.deleteGuest()}>
                             Delete
                         </Button>
                         <Button color="primary" onClick={() => this.closeDeleteDialog()}>

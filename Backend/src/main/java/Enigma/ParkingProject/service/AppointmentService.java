@@ -12,7 +12,9 @@ import java.util.List;
 public class AppointmentService implements IAppointmentService {
 
     @Autowired
+
     private IAppointmentDAL appointmentDAL;
+
 
     @Override
     public List<Appointment> getAllAppointments() {
@@ -43,4 +45,5 @@ public class AppointmentService implements IAppointmentService {
         }
         return null;
     }
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IAppointmentService {
 
+
     List<Appointment> getAllAppointments();
 
     Appointment getAppointmentById(int id);
@@ -16,3 +17,4 @@ public interface IAppointmentService {
 
     Appointment ScanAppointment(int accountId);
 }
+

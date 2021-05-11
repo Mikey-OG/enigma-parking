@@ -6,16 +6,19 @@ import Enigma.ParkingProject.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class AccountDAL implements IAccountDAL {
 
+
     private final List<Account> accountList = new ArrayList<>();
 
     @Autowired
     private IAccountRepository repo;
+
 
     @Override
     public List<Account> getAccountList() {
@@ -32,15 +35,15 @@ public class AccountDAL implements IAccountDAL {
         repo.deleteById(accountid);
     }
 
-
     @Override
     public void addAccount(Account account) {
         repo.save(account);
     }
 
     @Override
-    public boolean updateAccount(Account account) {
-        repo.save(account);
-        return true;
-    }
+    public boolean updateAccount(Account account){
+            repo.save(account);
+            return true;
+        }
+
 }
