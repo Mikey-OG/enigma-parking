@@ -1,4 +1,4 @@
-package dalinterfaces;
+package Enigma.ParkingProject.repository;
 
 import Enigma.ParkingProject.model.Account;
 
@@ -9,7 +9,7 @@ public interface IAccountDAL {
 
     Account getAccountById(int accountId);
 
-    void deleteAccount(Account account);
+    void deleteAccount(int account);
 
     void addAccount(Account account);
 

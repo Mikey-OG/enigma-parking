@@ -31,8 +31,7 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    public Account() {
-    }
+    public Account() { }
 
     public int getAccountId() { return accountId; }
     public void setAccountId(int accountId) {

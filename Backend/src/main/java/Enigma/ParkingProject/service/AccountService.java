@@ -1,51 +1,37 @@
 package Enigma.ParkingProject.service;
 
 import Enigma.ParkingProject.model.Account;
-import Enigma.ParkingProject.repository.IAccountRepository;
+import Enigma.ParkingProject.repository.IAccountDAL;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
-import dalinterfaces.IAccountDAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
 
-
-        IAccountDAL dal;
-
-        @Autowired
-       public AccountService(IAccountDAL dal) {
-         //this.IAccountRepository = IAccountRepository;
-            this.dal = dal;
-       }
-
-        @Override
-        public List<Account> getAccountList()
-        {
-            return dal.getAccountList();
-        }
+    @Autowired
+    private IAccountDAL accountDAL;
 
     @Override
-    public Account getAccountById(int accountId) {
-
-        return dal.getAccountById(accountId);
-
+    public List<Account> getAccountList() {
+        return accountDAL.getAccountList();
     }
 
     @Override
-    public void deleteAccount(Account account) {
+    public Account getAccountById(int accountId) {
+        return accountDAL.getAccountById(accountId);
+    }
 
-        dal.deleteAccount(account);
-
+    @Override
+    public void deleteAccount(int accountId) {
+        accountDAL.deleteAccount(accountId);
     }
 
     @Override
     public void addAccount(Account account) {
-
-        dal.addAccount(account);
+        accountDAL.addAccount(account);
     }
 
     @Override
@@ -54,21 +40,13 @@ public class AccountService implements IAccountService {
         if (old == null) {
             return false;
         }
+        old.setFirstName(account.getFirstName());
+        old.setLastName(account.getLastName());
+        old.setLicensePlate(account.getLicensePlate());
+        old.setPhoneNumber(account.getPhoneNumber());
 
-        /*repo.save(account).setFirstName(account.getFirstName());
-        repo.save(account).setLastName(account.getLastName());
-        repo.save(account).setLicensePlate(account.getLicensePlate());
-        repo.save(account).setPhoneNumber(account.getPhoneNumber());*/
-        dal.updateAccount(account);
+        accountDAL.updateAccount(old);
 
         return true;
-
-
     }
-
-
-
-
-
-
 }

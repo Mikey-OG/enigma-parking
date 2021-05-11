@@ -1,14 +1,11 @@
 package Enigma.ParkingProject.controller;
 
 import Enigma.ParkingProject.model.Account;
-import Enigma.ParkingProject.repository.DataStore;
-import Enigma.ParkingProject.service.Sms;
-import Enigma.ParkingProject.service.Whatsapp;
+import Enigma.ParkingProject.service.WhatsappService;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,22 +17,11 @@ import java.util.Optional;
 public class AccountController {
 
     @Autowired
-    private IAccountService service;
-
-//    @GetMapping("{account}") //GET at http://localhost:XXXX/account/MS7878DSB
-//    public ResponseEntity<Account> getAccountPath(@PathVariable(value = "account") String licensePlate) {
-//        Account account = dataStore.getAccountByLicensePlate(licensePlate);
-//
-//        if(account != null) {
-//            return ResponseEntity.ok().body(account);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    private IAccountService accountService;
 
     @GetMapping("{id}")
     public ResponseEntity<Account> getAccountPath(@PathVariable(value = "id") int id){
-        Account account = service.getAccountById(id);
+        Account account = accountService.getAccountById(id);
 
         if(account != null){
             return ResponseEntity.ok().body(account);
@@ -48,18 +34,16 @@ public class AccountController {
     //POST at http://localhost:XXXX/account
     public ResponseEntity<Account> createAccount(@RequestBody Account newAccount) {
 
-            service.addAccount(newAccount);
-            String url = "account" + "/" + newAccount.getLicensePlate(); // url of the created account
-            URI uri = URI.create(url);
-            return new ResponseEntity(uri,HttpStatus.CREATED);
-        //}
-
+        accountService.addAccount(newAccount);
+        String url = "account" + "/" + newAccount.getLicensePlate(); // url of the created account
+        URI uri = URI.create(url);
+        return new ResponseEntity(uri,HttpStatus.CREATED);
     }
 
     @PutMapping("{account}")
     //PUT at http://localhost:XXXX/account/{accountID}
     public ResponseEntity<Account> updateAccount(@PathVariable("account") int accountID,  @RequestParam("licenseplate") String LicensePlate, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("phone") String phoneNo) {
-        Account account = service.getAccountById(accountID);
+        Account account = accountService.getAccountById(accountID);
         if (account == null){
             return new ResponseEntity("Please provide a valid license plate.",HttpStatus.NOT_FOUND);
         }
@@ -76,8 +60,7 @@ public class AccountController {
     public ResponseEntity<List<Account>> getAllAccounts(@RequestParam(value = "accounts") Optional<String> licensePlate ) {
         List<Account> accounts = null;
 
-        accounts= service.getAccountList();
-
+        accounts= accountService.getAccountList();
 
         if(accounts != null) {
             return ResponseEntity.ok().body(accounts);
@@ -87,38 +70,22 @@ public class AccountController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deletePost(@PathVariable Account account) {
-        service.deleteAccount(account);
+    public ResponseEntity deletePost(@PathVariable("id") int id) {
+
+        accountService.deleteAccount(id);
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();
-
     }
 
-    @RequestMapping("/smsAvailable")
-    public void smsAvailable() {
-        Sms sms = new Sms();
-        sms.SendSmsParkingAvailable();
-    }
-
-    @RequestMapping("/smsFull")
-    public void smsFull() {
-        Sms sms = new Sms();
-        sms.SendSmsParkingFull();
-    }
-
-    @RequestMapping("/whatsappAvailable")
+    /*@RequestMapping("/whatsappAvailable")
     public void whatsappAvailable() {
-        Whatsapp whatsapp = new Whatsapp();
+        WhatsappService whatsapp = new WhatsappService();
         whatsapp.WhatsappParkingAvailable();
     }
 
     @RequestMapping("/whatsappFull")
     public void whatsappFull() {
-        Whatsapp whatsapp = new Whatsapp();
+        WhatsappService whatsapp = new WhatsappService();
         whatsapp.WhatsappParkingFull();
-    }
-
-
-
-
+    }*/
 }

@@ -9,7 +9,7 @@ public interface IAccountService {
 
     Account getAccountById(int accountId);
 
-    void deleteAccount(Account account);
+    void deleteAccount(int accountId);
 
     void addAccount(Account account);
 
