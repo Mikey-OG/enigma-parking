@@ -15,11 +15,6 @@ public class AccountService implements IAccountService {
         IAccountDAL accountDAL;
 
 
-//        public AccountService(IAccountRepository IAccountRepository) {
-//            //this.IAccountRepository = IAccountRepository;
-//            this.repo = repo;
-//        }
-
         @Override
         public List<Account> getAccountList()
         {
@@ -28,21 +23,16 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account getAccountById(int accountId) {
-
         return accountDAL.getAccountById(accountId);
-
     }
 
     @Override
     public void deleteAccount(int accountId) {
-
         accountDAL.deleteAccount(accountId);
-
     }
 
     @Override
     public void addAccount(Account account) {
-
         accountDAL.addAccount(account);
     }
 
