@@ -77,7 +77,7 @@ public class AccountController {
         return ResponseEntity.ok().build();
     }
 
-    /*@RequestMapping("/whatsappAvailable")
+    @RequestMapping("/whatsappAvailable")
     public void whatsappAvailable() {
         WhatsappService whatsapp = new WhatsappService();
         whatsapp.WhatsappParkingAvailable();
@@ -87,5 +87,5 @@ public class AccountController {
     public void whatsappFull() {
         WhatsappService whatsapp = new WhatsappService();
         whatsapp.WhatsappParkingFull();
-    }*/
+    }
 }
