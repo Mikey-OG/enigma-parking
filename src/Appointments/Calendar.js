@@ -57,11 +57,11 @@ class Calendar extends Component {
                     var appointment = {};
                     let guest = guests.find(a => a.accountId === item.guestId);
                     appointment._id = item.appointmentId;
-                    if (guest === !null) {
+                    if (guest) {
                         appointment.name = 'Appointment with ' + guest.firstName + ' ' + guest.lastName;
                     }
                     else {
-                        appointment.name = 'Appointment with unkown';
+                        appointment.name = 'Appointment with unknown';
                     }
                     appointment.startDateTime = new Date(item.appointmentStartDate);
                     appointment.endDateTime = new Date(item.appointmentEndDate);
