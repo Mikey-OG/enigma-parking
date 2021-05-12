@@ -41,7 +41,11 @@ class AddAppointment extends Component {
         this.state = {
             value: '',
             suggestions: [],
-            appointment: this.emptyAppointment
+            appointment: this.emptyAppointment,
+            showGuestError: false,
+            showEmailError: false,
+            showStartDateError: false,
+            showEndDateError: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,20 +56,51 @@ class AddAppointment extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const appointment = this.state.appointment;
-        await fetch('/appointment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(appointment),
-        }).then((response) => {
-            console.log(response);
-            if (response.ok) {
-                this.props.history.push("/calendar");
-            }
+        if (this.formValidation()){
+            const appointment = this.state.appointment;
+            await fetch('/appointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(appointment),
+            }).then((response) => {
+                console.log(response);
+                if (response.ok) {
+                    this.props.history.push("/calendar");
+                }
+            });
+        }
+    }
+
+    formValidation(){
+        let validated = true;
+
+        this.setState({
+            showGuestError: false,
+            showEmailError: false,
+            showStartDateError: false,
+            showEndDateError: false
         });
 
+        const appointment = this.state.appointment;
+        if ( appointment.guestId === '' ){
+            this.setState({showGuestError: true});
+            validated = false;
+        }
+        if ( appointment.employeeEmail === '' ){
+            this.setState({showEmailError: true});
+            validated = false;
+        }
+        if ( appointment.appointmentStartDate === '' ){
+            this.setState({showStartDateError: true});
+            validated = false;
+        }
+        if ( appointment.appointmentEndDate === '' ){
+            this.setState({showEndDateError: true});
+            validated = false;
+        }
+        return validated;
     }
 
     handleInputChange(event) {
@@ -121,7 +156,7 @@ class AddAppointment extends Component {
     };
 
     render() {
-        const {value, suggestions} = this.state;
+        const {value, suggestions, showGuestError, showEmailError, showStartDateError, showEndDateError} = this.state;
 
         const inputProps = {
             value,
@@ -149,11 +184,13 @@ class AddAppointment extends Component {
                                             onSuggestionSelected={this.onSuggestionSelected}
                                             inputProps={inputProps}
                                         />
+                                        <p style={{color: 'red'}}>{showGuestError ? 'Missing Guest, make sure to select one from the suggestions' : ''}</p>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="employeeEmail">Email of Employee</Label>
                                         <Input type="email" name="employeeEmail" id="employeeEmail"
                                                onChange={this.handleInputChange}/>
+                                        <p style={{color: 'red'}}>{showEmailError ? 'Missing Email' : ''}</p>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="appointmentStartDate">Appointment Start Date</Label>
@@ -162,6 +199,7 @@ class AddAppointment extends Component {
                                                   locale={'nl'}
                                                   timeFormat="HH:mm"
                                                   onChange={this.handleStartDatetimeChange}/>
+                                        <p style={{color: 'red'}}>{showStartDateError ? 'Missing Start Date' : ''}</p>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="appointmentEndDate">Appointment End Date</Label>
@@ -170,6 +208,7 @@ class AddAppointment extends Component {
                                                   locale={'nl'}
                                                   timeFormat="HH:mm"
                                                   onChange={this.handleEndDatetimeChange}/>
+                                        <p style={{color: 'red'}}>{showEndDateError ? 'Missing End Date' : ''}</p>
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit">Save</Button>{' '}
