@@ -34,4 +34,9 @@ public class AppointmentDAL implements IAppointmentDAL {
     public void deleteAppointment(int id) {
         repo.deleteById(id);
     }
+
+    @Override
+    public List<Appointment> getAllAppointmentsByGuestId(int guestId) {
+        return null;
+    }
 }

@@ -16,5 +16,7 @@ public interface IAppointmentService {
     void deleteAppointment(int id);
 
     Appointment ScanAppointment(int accountId);
+
+    void getAllAppointmentsFromGuest(int guestId);
 }
 

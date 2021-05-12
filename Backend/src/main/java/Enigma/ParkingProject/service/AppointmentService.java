@@ -46,4 +46,13 @@ public class AppointmentService implements IAppointmentService {
         return null;
     }
 
+    @Override
+    public void getAllAppointmentsFromGuest(int guestId) {
+        List<Appointment> appointments = appointmentDAL.getAllAppointmentsByGuestId(guestId);
+        for (Appointment a : appointments)
+        {
+            appointmentDAL.deleteAppointment(a.getAppointmentId());
+        }
+    }
+
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "accountID")
+    @Column(name = "account_ID")
     private int accountId;
     @Column(name = "licenseplate")
     private String licensePlate;
@@ -73,7 +73,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Account{" +
                 "ID =" + accountId +
                 ", License Plate ='" + licensePlate + '\'' +
                 ", Name =" + firstName + " " + lastName +'\'' +

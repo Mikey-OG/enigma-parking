@@ -4,6 +4,7 @@ import Enigma.ParkingProject.model.Account;
 
 import Enigma.ParkingProject.service.WhatsappService;
 import Enigma.ParkingProject.serviceinterfaces.IAccountService;
+import Enigma.ParkingProject.serviceinterfaces.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ public class AccountController {
 
     @Autowired
     private IAccountService accountService;
+    @Autowired
+    private IAppointmentService appointmentService;
 
     @GetMapping("{id}")
     public ResponseEntity<Account> getAccountPath(@PathVariable(value = "id") int id){
@@ -72,9 +75,7 @@ public class AccountController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deletePost(@PathVariable("id") int id) {
-
         accountService.deleteAccount(id);
-
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();
     }

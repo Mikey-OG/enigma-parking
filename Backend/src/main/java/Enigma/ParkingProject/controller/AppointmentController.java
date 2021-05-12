@@ -15,6 +15,8 @@ public class AppointmentController {
     @Autowired
     private IAppointmentService appointmentService;
 
+
+
     @GetMapping //GET at http://localhost:XXXX/appointments
     public ResponseEntity<List<Appointment>> getAllAppointments()
     {

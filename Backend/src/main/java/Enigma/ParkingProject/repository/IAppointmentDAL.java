@@ -13,5 +13,7 @@ public interface IAppointmentDAL
     void addAppointment(Appointment appointment);
 
     void deleteAppointment(int id);
+
+    List<Appointment> getAllAppointmentsByGuestId(int guestId);
 }
 

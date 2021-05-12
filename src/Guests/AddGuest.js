@@ -72,10 +72,6 @@ class AddGuest extends Component {
                                         <Input type="text" name="licensePlate" id="licensePlate" onChange={this.handleChange}/>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="licensePlate">License Plate</Label>
-                                        <Input type="text" name="licensePlate" id="licensePlate" onChange={this.handleChange}></Input>
-                                    </FormGroup>
-                                    <FormGroup>
                                         <Label for="phoneNumber">Phone Number</Label>
                                         <Input type="text" name="phoneNumber" id="phoneNumber" onChange={this.handleChange}/>
                                     </FormGroup>
