@@ -1,4 +1,4 @@
-/*package Enigma.ParkingProject.service;
+package Enigma.ParkingProject.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,4 +15,3 @@ public class myUserDetailsService implements UserDetailsService {
         return new User("admin", "212121", new ArrayList<>());
     }
 }
-*/
