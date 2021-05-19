@@ -75,6 +75,7 @@ class EditAppointment extends Component {
         });
 
         const appointment = this.state.appointment;
+        console.log(appointment.guestId);
         if ( appointment.guestId === '' ){
             this.setState({showGuestError: true});
             validated = false;
