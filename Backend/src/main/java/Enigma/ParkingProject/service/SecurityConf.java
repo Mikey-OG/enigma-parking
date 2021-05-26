@@ -1,4 +1,4 @@
-package Enigma.ParkingProject.service;
+/*package Enigma.ParkingProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,3 +24,4 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         return NoOpPasswordEncoder.getInstance();
     }
 }
+*/
