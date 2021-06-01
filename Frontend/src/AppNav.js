@@ -55,6 +55,13 @@ class AppNav extends Component {
                                     <NavItem>
                                         <NavLink href="/addGuest">Add Guest</NavLink>
                                     </NavItem>
+                                    <NavItem>
+                                        <NavLink href="/calendar">Calendar</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink href="/addAppointment">Add Appointment</NavLink>
+                                    </NavItem>
+
                                 </Nav>
                                 <Link to="/" size="sm" className="ml-auto btn btn-danger btn-sm" color="danger" onClick={logout}>
                                     Logout
