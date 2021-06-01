@@ -50,7 +50,7 @@ public class ScanController {
                    smsService.SendSmsParkingAvailable(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
                }
                else {
-                   whatsapp.WhatsappParkingAvailable();
+                   whatsapp.WhatsappParkingAvailable(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
                }
            }
            else
@@ -59,7 +59,7 @@ public class ScanController {
                    smsService.SendSmsParkingFull(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
                }
                else {
-                   whatsapp.WhatsappParkingFull();
+                   whatsapp.WhatsappParkingFull(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
                }
            }
 
