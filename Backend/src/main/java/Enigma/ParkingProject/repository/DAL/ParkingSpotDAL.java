@@ -11,7 +11,7 @@ import java.util.List;
 public class ParkingSpotDAL {
     @Autowired
     private IParkingSpotRepository repo;
-    public void SaveSpace(ParkingSpotEntity spot)
+    public void assignSpot(ParkingSpotEntity spot)
     {
         repo.save(spot);
     }
@@ -19,5 +19,13 @@ public class ParkingSpotDAL {
     public List<ParkingSpotEntity> getAllSpots()
     {
         return repo.findAll();
+    }
+    public List<ParkingSpotEntity> getAllAvailableSpots()
+    {
+        return repo.getParkingSpotEntitiesByOccupied("no");
+    }
+    public ParkingSpotEntity getSpotbyId(int guestId)
+    {
+        return repo.getParkingSpotEntityByGuestId(guestId);
     }
 }

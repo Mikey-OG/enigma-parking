@@ -10,7 +10,8 @@ public class ParkingSpotEntity {
     private String spotID;
     @Column(name = "occupied")
     private String occupied;
-
+    @Column(name = "guestId")
+    private int guestId;
     public ParkingSpotEntity() {
 
     }
@@ -32,8 +33,17 @@ public class ParkingSpotEntity {
         this.occupied = occupied;
     }
 
-    public ParkingSpotEntity(String spotID, String occupied) {
+    public int getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+
+    public ParkingSpotEntity(String spotID, String occupied, int guestId) {
         this.spotID = spotID;
         this.occupied = occupied;
+        this.guestId = guestId;
     }
 }
