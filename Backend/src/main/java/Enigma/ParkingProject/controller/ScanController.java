@@ -27,7 +27,7 @@ public class ScanController {
 
         NotificationService notificationService = new NotificationService();
         SmsService smsService = new SmsService();
-        //WhatsappService whatsapp = new WhatsappService();
+        WhatsappService whatsapp = new WhatsappService();
         String httpcar = "https://www.anwb.nl/binaries/content/gallery/anwb/portal/verzekeringen/autoverzekering/kentekenplaat.jpg/kentekenplaat.jpg/anwb%3Aw760";
 
        if(lprService.Scan(httpcar) != null) {
@@ -36,7 +36,7 @@ public class ScanController {
            notificationService.displayTray(account.getFirstName()+" "+account.getLastName(), appointment.getAppointmentStartDate());
            emailService.sendEmail(appointment.getEmployeeEmail(), account.getFirstName()+" "+account.getLastName(), appointment.getAppointmentStartDate());
            smsService.SendSmsParkingAvailable(account.getPhoneNumber(), account.getFirstName()+" "+account.getLastName());
-           //whatsapp.WhatsappParkingAvailable(account.getPhoneNumber(),account.getFirstName()+" "+account.getLastName());
+           whatsapp.WhatsappParkingAvailable(account.getPhoneNumber(),account.getFirstName()+" "+account.getLastName());
         }
     }
 }
