@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import {Navbar, NavbarBrand, Nav, NavItem, NavLink, Button} from 'reactstrap';
+import {Link} from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
+import { authProvider } from './authProvider';
+import { AzureAD, AuthenticationState} from 'react-aad-msal';
 
 class AppNav extends Component {
+
+    // logout = () => {
+    //     this.props.logoutUser();
+    // };
+
     constructor(props){
         super(props);
 
@@ -30,42 +38,48 @@ class AppNav extends Component {
         const {showLogoutDialog} = this.state;
 
         return (
-            <div>
-                <Navbar color="dark" dark expand="md">
-                    <NavbarBrand href="/">Parking Manager</NavbarBrand>
-                    <Nav style={{position: 'absolute', left: '50%', transform: 'translate(-50%)', overflow: 'hidden'}} navbar>
-                        <NavItem>
-                            <NavLink href="/home">Home</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/addGuest">Add Guest</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/calendar">Calendar</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/addAppointment">Add Appointment</NavLink>
-                        </NavItem>
-                    </Nav>
-                    <Button size="sm" className="ml-auto" color="danger" onClick={() => this.openLogoutDialog()}>
-                        Logout
-                    </Button>
-                </Navbar>
-                <Modal show={showLogoutDialog} onHide={() => this.closeLogoutDialog()}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Delete Guest</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Are you sure you want to logout?</Modal.Body>
-                    <Modal.Footer>
-                        <Button color="danger" onClick={() => this.logout()}>
-                            Logout
-                        </Button>
-                        <Button color="primary" onClick={() => this.closeLogoutDialog()}>
-                            Cancel
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </div>
+
+            <AzureAD provider={authProvider} forceLogin={true}>
+                {
+                    ({login, logout, authenticationState, error, accountInfo}) => {
+                    switch (authenticationState) {
+                        case AuthenticationState.Authenticated:
+                        return (
+                            <div>
+                            <Navbar color="dark" dark expand="md">
+                                <NavbarBrand href="/">Parking Manager</NavbarBrand>
+                                <Nav style={{position: 'absolute', left: '50%', transform: 'translate(-50%)', overflow: 'hidden'}} navbar>
+                                    <NavItem>
+                                        <NavLink href="/home">Home</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink href="/addGuest">Add Guest</NavLink>
+                                    </NavItem>
+                                </Nav>
+                                <Link to="/" size="sm" className="ml-auto btn btn-danger btn-sm" color="danger" onClick={logout}>
+                                    Logout
+                                </Link>
+                            </Navbar>
+                        </div>
+                        );
+                        case AuthenticationState.Unauthenticated:
+                        return (
+                            <div>
+                            {error && <p><span>An error occured during authentication, please try again!</span></p>}
+                            <p>
+                                <span>Hey stranger, you look new!</span>
+                                <button onClick={login}>Login</button>
+                            </p>
+                            </div>
+                        );
+                        case AuthenticationState.InProgress:
+                        return (<p>Authenticating...</p>);
+                    }
+                    }
+                }
+            </AzureAD>
+
+
         );
     }
 }
