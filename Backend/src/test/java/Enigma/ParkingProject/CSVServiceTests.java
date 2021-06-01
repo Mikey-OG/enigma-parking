@@ -35,7 +35,7 @@ public class CSVServiceTests {
     */
     public void AssignGuestToSpot()
     {
-        Account guest = new Account(4, "92-321-x","Gabriel","Brazil", "+31 0733821");
+        Account guest = new Account(4, "92-321-x","Gabriel","Brazil", "+31 0733821",false);
         service.assignSpot(guest.getAccountId());
         List<ParkingSpotCSV> spots = service.getallSpots();
 

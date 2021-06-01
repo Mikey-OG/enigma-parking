@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/scan")
@@ -31,24 +32,35 @@ public class ScanController {
 
         NotificationService notificationService = new NotificationService();
         SmsService smsService = new SmsService();
-        //WhatsappService whatsapp = new WhatsappService();
+        WhatsappService whatsapp = new WhatsappService();
         String httpcar = "https://www.anwb.nl/binaries/content/gallery/anwb/portal/verzekeringen/autoverzekering/kentekenplaat.jpg/kentekenplaat.jpg/anwb%3Aw760";
 
        if(lprService.Scan(httpcar) != null) {
            Account account = lprService.ScanAccount(httpcar);
            Appointment appointment = appointmentService.ScanAppointment(lprService.ScanAccount(httpcar).getAccountId());
-           notificationService.displayTray(account.getFirstName()+" "+account.getLastName(), appointment.getAppointmentStartDate());
+           List<Appointment> guestsappointments = appointmentService.getAllAppointmentsFromGuest(account.getAccountId());
+           if(guestsappointments != null) {
+               notificationService.displayTray(account.getFirstName() + " " + account.getLastName(), appointment.getAppointmentStartDate());
+           }
            emailService.sendEmail(appointment.getEmployeeEmail(), account.getFirstName()+" "+account.getLastName(), appointment.getAppointmentStartDate());
            boolean available = csvService.assignSpot(account.getAccountId());
            if (available)
            {
-               smsService.SendSmsParkingAvailable(account.getPhoneNumber(), account.getFirstName()+" "+account.getLastName());
-               //whatsapp.WhatsappParkingAvailable(account.getPhoneNumber(),account.getFirstName()+" "+account.getLastName());
+               if(account.getContactViaWhatsapp() == false) {
+                   smsService.SendSmsParkingAvailable(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
+               }
+               else {
+                   whatsapp.WhatsappParkingAvailable();
+               }
            }
            else
            {
-               smsService.SendSmsParkingFull(account.getPhoneNumber(), account.getFirstName()+" "+account.getLastName());
-               //whatsapp.SendSmsParkingFull(account.getPhoneNumber(),account.getFirstName()+" "+account.getLastName());
+               if(account.getContactViaWhatsapp() == false) {
+                   smsService.SendSmsParkingFull(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
+               }
+               else {
+                   whatsapp.WhatsappParkingFull();
+               }
            }
 
         }

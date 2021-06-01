@@ -1,7 +1,6 @@
 package Enigma.ParkingProject.model;
 
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,13 +21,16 @@ public class Account {
     private String lastName;
    @Column(name = "phonenumber")
     private String phoneNumber;
+   @Column(name = "SmsEnable")
+   private boolean contactViaWhatsapp;
 
-    public Account(int accountId, String licensePlate, String firstName, String lastName, String phoneNumber) {
+    public Account(int accountId, String licensePlate, String firstName, String lastName, String phoneNumber, boolean contactViaWhatsapp) {
         this.accountId = accountId;
         this.licensePlate = licensePlate;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.contactViaWhatsapp = contactViaWhatsapp;
     }
 
     public Account() { }
@@ -58,6 +60,14 @@ public class Account {
     public String getPhoneNumber() { return phoneNumber; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
+    public boolean getContactViaWhatsapp() {
+        return contactViaWhatsapp;
+    }
+
+    public void setContactViaWhatsapp(boolean contactViaSms) {
+        this.contactViaWhatsapp = contactViaSms;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,10 +84,12 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "ID =" + accountId +
-                ", License Plate ='" + licensePlate + '\'' +
-                ", Name =" + firstName + " " + lastName +'\'' +
-                ", Phone Number = " + phoneNumber +
+                "accountId=" + accountId +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", contactViaSms=" + contactViaWhatsapp +
                 '}';
     }
 }

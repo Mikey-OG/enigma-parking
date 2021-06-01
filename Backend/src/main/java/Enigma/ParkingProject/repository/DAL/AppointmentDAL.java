@@ -37,6 +37,6 @@ public class AppointmentDAL implements IAppointmentDAL {
 
     @Override
     public List<Appointment> getAllAppointmentsByGuestId(int guestId) {
-        return null;
+        return repo.getAppointmentsByGuestId(guestId);
     }
 }

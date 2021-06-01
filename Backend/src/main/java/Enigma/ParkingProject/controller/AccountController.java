@@ -75,6 +75,7 @@ public class AccountController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deletePost(@PathVariable("id") int id) {
+        appointmentService.getAllAppointmentsFromDeletedGuest(id);
         accountService.deleteAccount(id);
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return ResponseEntity.ok().build();

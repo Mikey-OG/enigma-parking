@@ -47,12 +47,18 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public void getAllAppointmentsFromGuest(int guestId) {
+    public void getAllAppointmentsFromDeletedGuest(int guestId) {
         List<Appointment> appointments = appointmentDAL.getAllAppointmentsByGuestId(guestId);
         for (Appointment a : appointments)
         {
             appointmentDAL.deleteAppointment(a.getAppointmentId());
         }
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentsFromGuest(int guestId) {
+        List<Appointment> appointments = appointmentDAL.getAllAppointmentsByGuestId(guestId);
+        return appointments;
     }
 
 }
