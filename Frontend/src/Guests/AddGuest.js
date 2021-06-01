@@ -11,7 +11,8 @@ class AddGuest extends Component {
         licensePlate: '',
         firstName: '',
         lastName: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        contactViaWhatsapp: false
     };
 
     constructor(props){
@@ -77,7 +78,7 @@ class AddGuest extends Component {
 
     handleChange(event){
         const target = event.target;
-        const value = target.value;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         let guest={...this.state.guest};
         guest[name] = value;
@@ -116,6 +117,10 @@ class AddGuest extends Component {
                                         <Label for="phoneNumber">Phone Number</Label>
                                         <Input type="text" name="phoneNumber" id="phoneNumber" onChange={this.handleChange}/>
                                         <p style={{color: 'red'}}>{showPhoneNumberNameError ? 'Incorrect or missing Phone Number' : ''}</p>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="contactviaSMS">Receive notification via Whatsapp?:</Label>
+                                        <Input type="checkbox" name="contactViaWhatsapp" id="contactViaWhatsapp" onChange={this.handleChange}/>                                    
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit" >Save</Button>{' '}
