@@ -31,7 +31,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	implementation group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.4.28.Final'
 
-	compile 'org.springframework.boot:spring-boot-starter-security'
+	// compile 'org.springframework.boot:spring-boot-starter-security'
 	compile('org.springframework.boot:spring-boot-starter-mail')
 	compile 'com.google.cloud:spring-cloud-gcp-starter-vision:2.0.2'
 

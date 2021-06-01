@@ -7,6 +7,8 @@ import EditGuest from './Guests/EditGuest';
 import Calendar from './Appointments/Calendar';
 import AddAppointment from './Appointments/AddAppointment';
 import EditAppointment from './Appointments/EditAppointment';
+import {config} from './Config';
+//import {PublicClientApplication} from '@azure/msal-browser';
 
 class App extends Component {
     state = {  }

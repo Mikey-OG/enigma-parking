@@ -5,11 +5,17 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { AzureAD } from 'react-aad-msal';
+import { authProvider } from './authProvider';
+
 
 
 ReactDOM.render(
-  <App/>,
+  <AzureAD provider={authProvider} forceLogin={true}>
+    <App />
+  </AzureAD>,
   document.getElementById('root')
+
 );
 
 // If you want to start measuring performance in your app, pass a function
