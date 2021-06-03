@@ -11,5 +11,5 @@ public interface ICSVService {
     List<ParkingSpotCSV> getallSpots();
     List<ParkingSpotCSV> getAllAvailableSpots();
     boolean assignSpot(int guestId);
-    void unassignSpot(int guestId);
+
 }

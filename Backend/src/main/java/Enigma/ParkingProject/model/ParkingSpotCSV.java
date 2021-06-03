@@ -37,10 +37,12 @@ public class ParkingSpotCSV {
         this.guestId = guestId;
     }
 
-    public ParkingSpotCSV(String spotId, String occupied, int guestId) {
+    public ParkingSpotCSV() {
+    }
+
+    public ParkingSpotCSV(String spotId, String occupied) {
         this.spotId = spotId;
         this.occupied = occupied;
-        this.guestId = guestId;
     }
 
     @Override
@@ -48,7 +50,6 @@ public class ParkingSpotCSV {
         return "ParkingSpotCSV{" +
                 "spotId='" + spotId + '\'' +
                 ", occupied='" + occupied + '\'' +
-                ", guestId=" + guestId +
                 '}';
     }
 }

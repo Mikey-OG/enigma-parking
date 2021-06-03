@@ -30,7 +30,7 @@ public class CSVService implements ICSVService {
                     .parse();
             if (spots != null) {
                 for (ParkingSpotCSV spot : spots) {
-                    ParkingSpotEntity parkingSpotEntity = new ParkingSpotEntity(spot.getSpotId(), spot.getOccupied(), spot.getGuestId());
+                    ParkingSpotEntity parkingSpotEntity = new ParkingSpotEntity(spot.getSpotId(), spot.getOccupied());
                     dal.assignSpot(parkingSpotEntity);
                 }
             } else {
@@ -47,7 +47,7 @@ public class CSVService implements ICSVService {
         List<ParkingSpotEntity> list = dal.getAllSpots();
         List<ParkingSpotCSV>  returnlist = new ArrayList<>();
         for (ParkingSpotEntity p: list) {
-            ParkingSpotCSV spot = new ParkingSpotCSV(p.getSpotID(),p.getOccupied(), p.getGuestId());
+            ParkingSpotCSV spot = new ParkingSpotCSV(p.getSpotID(),p.getOccupied());
             returnlist.add(spot);
         }
         return returnlist;
@@ -58,7 +58,7 @@ public class CSVService implements ICSVService {
         List<ParkingSpotEntity> spots = dal.getAllAvailableSpots();
         List<ParkingSpotCSV> returnlist = new ArrayList<>();
         for (ParkingSpotEntity p: spots) {
-            ParkingSpotCSV spotCSV = new ParkingSpotCSV(p.getSpotID(),p.getOccupied(),p.getGuestId());
+            ParkingSpotCSV spotCSV = new ParkingSpotCSV(p.getSpotID(),p.getOccupied());
             returnlist.add(spotCSV);
 
         }
@@ -74,18 +74,11 @@ public class CSVService implements ICSVService {
         else
         {
             ParkingSpotEntity first = spots.get(0);
-            ParkingSpotEntity assigned = new ParkingSpotEntity(first.getSpotID(), "yes", guestId);
+            ParkingSpotEntity assigned = new ParkingSpotEntity(first.getSpotID(), "yes");
             dal.assignSpot(assigned);
             return true;
         }
     }
-    public void unassignSpot(int guestId)
-    {
-        ParkingSpotEntity used = dal.getSpotbyId(guestId);
-        ParkingSpotEntity unassign = new ParkingSpotEntity(used.getSpotID(),"no", 0);
-        dal.assignSpot(unassign);
-    }
-
 }
 
 
