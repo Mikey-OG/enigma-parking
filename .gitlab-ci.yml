@@ -1,8 +1,17 @@
 stages:
     - build
+    - test 
+    - sonarQube
 
 build:
     stage: build
     script:
-        -cd Backend
-        ./gradlew build -x test
+        - cd Backend
+        - ./gradlew build -x test
+
+test:
+    stage: test
+    script:
+        - cd Backend
+        - ./gradlew test
+
