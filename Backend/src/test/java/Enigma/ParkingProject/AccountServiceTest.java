@@ -5,30 +5,35 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import Enigma.ParkingProject.model.Account;
 import Enigma.ParkingProject.repository.IAccountRepository;
+import Enigma.ParkingProject.repository.DAL.AccountDAL;
 import Enigma.ParkingProject.service.AccountService;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {
 
     @Mock
-    IAccountRepository AccountRepository;
+    AccountDAL accountDAL;
+
+    @InjectMocks
+    AccountService accountService;
 
     Account testAccount;
     Account testAccount2;
 
     List<Account> testAccounts;
 
-    @InjectMocks
-    AccountService accountService;
 
     @BeforeEach
     public void setUp()  {
@@ -44,9 +49,27 @@ public class AccountServiceTest {
     @Test
     public void getAllProductsTest() throws Exception
     {
-        when(AccountRepository.findAll()).thenReturn(testAccounts);
+        when(accountDAL.getAccountList()).thenReturn(testAccounts);
         List<Account> AccountList = accountService.getAccountList();
         Assertions.assertEquals(testAccounts, AccountList);
+    }
+
+    @Test
+    public void getAccountByIdTest() 
+    {
+        when(accountDAL.getAccountById(any(Integer.class))).thenReturn(testAccount2);
+        Account mainAccount = accountService.getAccountById(200);
+        Assertions.assertEquals(testAccount2, mainAccount);
+
+    }
+
+    @Test
+    public void updateAccountTest()
+    {
+        when(accountDAL.getAccountById(any(Integer.class))).thenReturn(testAccount2);
+        when(accountDAL.updateAccount(any(Account.class))).thenReturn(true);
+        boolean mainAccount = accountService.updateAccount(testAccount2);
+        Assertions.assertEquals(true, mainAccount);
     }
     
 }
