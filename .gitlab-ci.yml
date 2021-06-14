@@ -15,3 +15,8 @@ test:
         - cd Backend
         - ./gradlew test
 
+sonarQube: 
+    stage: sonarQube
+    script:
+    - ./gradlew sonarqube
+
