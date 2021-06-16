@@ -11,8 +11,6 @@ public class ParkingSpotCSV {
     @CsvBindByPosition(position = 1)
     private String occupied;
 
-    private int guestId;
-
     public String getSpotId() {
         return spotId;
     }
@@ -29,13 +27,6 @@ public class ParkingSpotCSV {
         this.occupied = occupied;
     }
 
-    public int getGuestId() {
-        return guestId;
-    }
-
-    public void setGuestId(int guestId) {
-        this.guestId = guestId;
-    }
 
     public ParkingSpotCSV() {
     }

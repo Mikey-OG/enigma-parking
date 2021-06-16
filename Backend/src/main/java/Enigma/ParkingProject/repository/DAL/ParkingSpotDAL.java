@@ -20,12 +20,7 @@ public class ParkingSpotDAL {
     {
         return repo.findAll();
     }
-    public List<ParkingSpotEntity> getAllAvailableSpots()
-    {
+    public List<ParkingSpotEntity> getAllAvailableSpots() {
         return repo.getParkingSpotEntitiesByOccupied("no");
-    }
-    public ParkingSpotEntity getSpotbyId(int guestId)
-    {
-        return repo.getParkingSpotEntityByGuestId(guestId);
     }
 }

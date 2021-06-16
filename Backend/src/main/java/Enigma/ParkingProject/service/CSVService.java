@@ -19,6 +19,7 @@ import java.util.List;
 public class CSVService implements ICSVService {
     @Autowired
     private ParkingSpotDAL dal;
+    @Override
     public void getCSv(String filename) throws IOException, CsvException {
         List<ParkingSpotEntity> parkingspots = new ArrayList<>();
 
@@ -28,6 +29,7 @@ public class CSVService implements ICSVService {
                     .withType(ParkingSpotCSV.class)
                     .build()
                     .parse();
+
             if (spots != null) {
                 for (ParkingSpotCSV spot : spots) {
                     ParkingSpotEntity parkingSpotEntity = new ParkingSpotEntity(spot.getSpotId(), spot.getOccupied());
@@ -42,6 +44,7 @@ public class CSVService implements ICSVService {
             System.out.println(e.toString());
         }
     }
+    @Override
     public List<ParkingSpotCSV> getallSpots()
     {
         List<ParkingSpotEntity> list = dal.getAllSpots();
@@ -53,7 +56,8 @@ public class CSVService implements ICSVService {
         return returnlist;
 
     }
-    public List<ParkingSpotCSV> getAllAvailableSpots()
+    @Override
+    public boolean checkForAvailableSpots()
     {
         List<ParkingSpotEntity> spots = dal.getAllAvailableSpots();
         List<ParkingSpotCSV> returnlist = new ArrayList<>();
@@ -62,23 +66,16 @@ public class CSVService implements ICSVService {
             returnlist.add(spotCSV);
 
         }
-        return returnlist;
-    }
-    public boolean assignSpot(int guestId)
-    {
-        List<ParkingSpotEntity> spots = dal.getAllAvailableSpots();
-        if (spots == null)
+        if(returnlist != null)
         {
-            return false;
+            return true;
         }
         else
         {
-            ParkingSpotEntity first = spots.get(0);
-            ParkingSpotEntity assigned = new ParkingSpotEntity(first.getSpotID(), "yes");
-            dal.assignSpot(assigned);
-            return true;
+            return false;
         }
     }
+
 }
 
 

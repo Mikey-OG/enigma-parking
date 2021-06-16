@@ -119,7 +119,7 @@ class AddGuest extends Component {
                                         <p style={{color: 'red'}}>{showPhoneNumberNameError ? 'Incorrect or missing Phone Number' : ''}</p>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="contactviaSMS">Receive notification via Whatsapp?:</Label>
+                                        <Label for="contactviaSMS">Receinve notification via Whatsapp?:</Label>
                                         <Input type="checkbox" name="contactViaWhatsapp" id="contactViaWhatsapp" onChange={this.handleChange}/>                                    
                                     </FormGroup>
                                     <FormGroup>

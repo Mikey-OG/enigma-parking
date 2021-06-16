@@ -43,7 +43,7 @@ public class ScanController {
                notificationService.displayTray(account.getFirstName() + " " + account.getLastName(), appointment.getAppointmentStartDate());
            }
            emailService.sendEmail(appointment.getEmployeeEmail(), account.getFirstName()+" "+account.getLastName(), appointment.getAppointmentStartDate());
-           boolean available = csvService.assignSpot(account.getAccountId());
+           boolean available = csvService.checkForAvailableSpots();
            if (available)
            {
                if(account.getContactViaWhatsapp() == false) {

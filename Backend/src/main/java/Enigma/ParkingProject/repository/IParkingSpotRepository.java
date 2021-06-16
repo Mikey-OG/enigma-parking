@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface IParkingSpotRepository extends JpaRepository<ParkingSpotEntity, String> {
     public List<ParkingSpotEntity> getParkingSpotEntitiesByOccupied(String occupied);
-    public ParkingSpotEntity getParkingSpotEntityByGuestId(int id);
 }
