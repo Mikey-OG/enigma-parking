@@ -1,7 +1,7 @@
 package Enigma.ParkingProject.repository.DAL;
 
 import Enigma.ParkingProject.model.Appointment;
-import Enigma.ParkingProject.repository.IAccountRepository;
+
 import Enigma.ParkingProject.repository.IAppointmentDAL;
 import Enigma.ParkingProject.repository.IAppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,7 @@ import java.util.List;
 public class AppointmentDAL implements IAppointmentDAL {
 
     @Autowired
-    IAppointmentRepository repo;
-
+    private IAppointmentRepository repo;
 
     @Override
     public List<Appointment> getAllAppointments() {
@@ -34,5 +33,10 @@ public class AppointmentDAL implements IAppointmentDAL {
     @Override
     public void deleteAppointment(int id) {
         repo.deleteById(id);
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentsByGuestId(int guestId) {
+        return repo.getAppointmentsByGuestId(guestId);
     }
 }

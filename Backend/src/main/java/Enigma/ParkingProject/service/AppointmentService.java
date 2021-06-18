@@ -1,7 +1,6 @@
 package Enigma.ParkingProject.service;
 
 import Enigma.ParkingProject.model.Appointment;
-import Enigma.ParkingProject.repository.IAccountDAL;
 import Enigma.ParkingProject.repository.IAppointmentDAL;
 import Enigma.ParkingProject.serviceinterfaces.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,9 @@ import java.util.List;
 public class AppointmentService implements IAppointmentService {
 
     @Autowired
-    IAppointmentDAL appointmentDAL;
+
+    private IAppointmentDAL appointmentDAL;
+
 
     @Override
     public List<Appointment> getAllAppointments() {
@@ -34,4 +35,30 @@ public class AppointmentService implements IAppointmentService {
     public void deleteAppointment(int id) {
         appointmentDAL.deleteAppointment(id);
     }
+
+    @Override
+    public Appointment ScanAppointment(int accountId){
+        for (Appointment appointment: getAllAppointments()) {
+            if (appointment.getGuestId() == accountId){
+                return appointment;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void getAllAppointmentsFromDeletedGuest(int guestId) {
+        List<Appointment> appointments = appointmentDAL.getAllAppointmentsByGuestId(guestId);
+        for (Appointment a : appointments)
+        {
+            appointmentDAL.deleteAppointment(a.getAppointmentId());
+        }
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentsFromGuest(int guestId) {
+        List<Appointment> appointments = appointmentDAL.getAllAppointmentsByGuestId(guestId);
+        return appointments;
+    }
+
 }

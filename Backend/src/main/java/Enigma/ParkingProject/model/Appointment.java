@@ -18,8 +18,8 @@ public class Appointment {
     @Column(name = "appointmentEndDate")
     private String appointmentEndDate;
 
-    public Appointment() {
-    }
+
+    public Appointment() { }
 
 
     public Appointment(int appointmentId, int guestId, String employeeEmail, String appointmentStartDate, String appointmentEndDate) {

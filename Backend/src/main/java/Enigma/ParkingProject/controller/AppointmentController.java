@@ -15,6 +15,8 @@ public class AppointmentController {
     @Autowired
     private IAppointmentService appointmentService;
 
+
+
     @GetMapping //GET at http://localhost:XXXX/appointments
     public ResponseEntity<List<Appointment>> getAllAppointments()
     {
@@ -26,6 +28,7 @@ public class AppointmentController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("{id}")
     public ResponseEntity<Appointment> getAppointment(@PathVariable int id)
     {
@@ -39,12 +42,14 @@ public class AppointmentController {
             return ResponseEntity.ok().body(appointment);
         }
     }
+
     @PostMapping()
     public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment newAppointment)
     {
         appointmentService.addAppointment(newAppointment);
         return ResponseEntity.ok().build();
     }
+
     @DeleteMapping("{id}") //DELETE at http://localhost:XXXX/appointments/id
     public ResponseEntity deleteAppointment(@PathVariable int id)
     {
@@ -53,3 +58,4 @@ public class AppointmentController {
     }
 
 }
+

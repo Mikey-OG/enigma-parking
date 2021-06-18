@@ -15,26 +15,24 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:1.18.16'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile 'com.twilio.sdk:twilio:8.9.0'
 	implementation 'junit:junit:4.12'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	//implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.hibernate:hibernate-agroal:5.4.30.Final'
 	testImplementation group: 'com.h2database', name: 'h2', version: '1.4.197'
-	//compile('com.h2database:h2')
-	//implementation group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.4.28.Final'
-	//implementation group: 'hikari-cp', name: 'hikari-cp', version: '2.12.0'
-	// add dependencies to H2 in-memory database and Java Persistency API
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'com.h2database:h2'
 	implementation group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.4.28.Final'
-
-	//compile 'org.springframework.boot:spring-boot-starter-security'
-
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile 'com.google.cloud:spring-cloud-gcp-starter-vision:2.0.2'
+	// https://mvnrepository.com/artifact/com.opencsv/opencsv
+	implementation group: 'com.opencsv', name: 'opencsv', version: '5.4'
 	// mockito
 	dependencies { testImplementation "org.mockito:mockito-core:3.+" }
+	compile 'com.github.sarxos:webcam-capture:0.3.12'
 }
 
 test {

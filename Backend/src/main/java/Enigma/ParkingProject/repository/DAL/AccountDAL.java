@@ -16,13 +16,12 @@ public class AccountDAL implements IAccountDAL {
 
     private final List<Account> accountList = new ArrayList<>();
 
-
-    IAccountRepository repo;
+    @Autowired
+    private IAccountRepository repo;
 
 
     @Override
     public List<Account> getAccountList() {
-        //return accountList;
         return repo.findAll();
     }
 
@@ -42,10 +41,9 @@ public class AccountDAL implements IAccountDAL {
     }
 
     @Override
-    public boolean updateAccount(Account account) {
-        repo.save(account);
-        return true;
-
-    }
+    public boolean updateAccount(Account account){
+            repo.save(account);
+            return true;
+        }
 
 }

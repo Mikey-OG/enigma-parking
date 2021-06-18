@@ -11,15 +11,15 @@ import java.util.List;
 @Service
 public class AccountService implements IAccountService {
 
-        @Autowired
-        IAccountDAL accountDAL;
 
+    @Autowired
+    private IAccountDAL accountDAL;
 
-        @Override
-        public List<Account> getAccountList()
-        {
-            return accountDAL.getAccountList();
-        }
+    @Override
+    public List<Account> getAccountList() {
+        return accountDAL.getAccountList();
+    }
+
 
     @Override
     public Account getAccountById(int accountId) {
@@ -51,6 +51,5 @@ public class AccountService implements IAccountService {
 
         return true;
     }
-
 
 }
