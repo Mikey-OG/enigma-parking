@@ -80,7 +80,7 @@ class App extends Component {
             <Router>
                 <Switch>
                     <Route exact path="/">
-                        <Redirect to="/home" />
+                        <Redirect to="/calendar" />
                     </Route>
                     <Route path='/home' exact={true} component={GuestList}/>
                     <Route path='/addGuest' exact={true} component={AddGuest}/>
