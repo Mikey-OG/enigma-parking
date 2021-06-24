@@ -37,7 +37,7 @@ class AppNav extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8081/getStatusCamera")
+        fetch("http://localhost:8081/camera/getStatusCamera")
           .then(res => res.json())
           .then(
             (result) => {

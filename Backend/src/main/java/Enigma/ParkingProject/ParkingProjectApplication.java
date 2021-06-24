@@ -21,7 +21,7 @@ public class ParkingProjectApplication implements WebcamMotionListener{
 		WebcamMotionDetector detector = new WebcamMotionDetector(Webcam.getDefault());
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
-		detector.setInterval(1000);
+		detector.setInterval(300);
 		detector.addMotionListener(this);
 		detector.start();
 	}

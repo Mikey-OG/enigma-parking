@@ -33,8 +33,8 @@ public class ScanController {
         try{
             Webcam w = Webcam.getDefault();
             if (w.getLock().isLocked())
-                return 0;
-            return 1;
+                return 1;
+            return 0;
         }
         catch (Exception exception) {
             return 0;
@@ -47,7 +47,7 @@ public class ScanController {
         NotificationService notificationService = new NotificationService();
         SmsService smsService = new SmsService();
         WhatsappService whatsapp = new WhatsappService();
-        String httpcar = "https://www.anwb.nl/binaries/content/gallery/anwb/portal/verzekeringen/autoverzekering/kentekenplaat.jpg/kentekenplaat.jpg/anwb%3Aw760";
+        String httpcar = "file:Screenshot.jpeg";
 
        if(lprService.Scan(httpcar) != null) {
            Account account = lprService.ScanAccount(httpcar);
