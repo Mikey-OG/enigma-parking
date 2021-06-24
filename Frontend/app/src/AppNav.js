@@ -17,7 +17,7 @@ class AppNav extends Component {
 
         this.state = {
             showLogoutDialog: false,
-            cam: ''
+            camstat: ''
         };
 
         this.openLogoutDialog = this.openLogoutDialog.bind(this);
@@ -37,23 +37,14 @@ class AppNav extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8081/camera/getStatusCamera")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                isLoaded: true,
-                cam: result.cam
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error
-              });
-            }
-          )
-      }
+
+        fetch('/camera/getStatusCamera')
+        .then((cam) => cam.json())
+        .then(camvalue => {
+            this.setState({ camstat: camvalue });
+            console.log(camvalue);
+        });
+    }
 
     render() {
         const {showLogoutDialog} = this.state;
@@ -62,7 +53,7 @@ class AppNav extends Component {
 
             <AzureAD provider={authProvider} forceLogin={true}>
                 {
-                    ({login, logout, authenticationState, error, accountInfo}) => {
+                    ({cam, camstat, camvalue, login, logout, authenticationState, error, accountInfo}) => {
                     switch (authenticationState) {
                         case AuthenticationState.Authenticated:
                         return (
@@ -88,11 +79,13 @@ class AppNav extends Component {
                                     <NavItem>
                                         <NavLink href="/addAppointment">Add Appointment</NavLink>
                                     </NavItem>
-
+                                    
                                 </Nav>
-                                <Link to="/" size="sm" className="ml-auto btn btn-danger btn-sm" color="danger" onClick={logout}>
-                                    Logout
-                                </Link>
+                                    {/* <div className="ml-auto mr-3" style={this.state.camstat == '1' ? {color:'lime'} : {color:'red'}}>CAMERA</div> */}
+                                    {this.state.camstat == '1' ? <div className="ml-auto mr-3" style={{color:'lime'}}>CAMERA ON</div> : <div className="ml-auto mr-3" style={{color:'red'}}>CAMERA OFF</div>}
+                                    <Link to="/" size="sm" className="btn btn-danger btn-sm" color="danger" onClick={logout}>
+                                        Logout
+                                    </Link>
                             </Navbar>
 
                             <Modal show={showLogoutDialog} onHide={() => this.closeLogoutDialog()}>
