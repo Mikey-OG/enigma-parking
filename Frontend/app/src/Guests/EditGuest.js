@@ -37,7 +37,7 @@ export default class EditGuest extends Component {
 
     handleChange(event) {
         const target = event.target;
-        const value = target.value;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         let guest = {...this.state.guest};
         guest[name] = value;
@@ -86,6 +86,11 @@ export default class EditGuest extends Component {
                                         <Label for="phoneNumber">Phone Number</Label>
                                         <Input type="text" name="phoneNumber" id="phoneNumber" value={guest.phoneNumber}
                                                onChange={this.handleChange}/>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="contactviaSMS">Receive notification via Whatsapp?:</Label>
+                                        <Input className="ml-2" type="checkbox" name="contactViaWhatsapp" id="contactViaWhatsapp" checked={guest.contactViaWhatsapp == true} 
+                                        value={guest.contactViaWhatsapp} onChange={this.handleChange}/>                                    
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit">Save</Button>{' '}

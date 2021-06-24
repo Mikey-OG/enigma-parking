@@ -120,11 +120,7 @@ class AddGuest extends Component {
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="contactviaSMS">Receive notification via Whatsapp?:</Label>
-<<<<<<< HEAD
                                         <Input className="ml-2" type="checkbox" name="contactViaWhatsapp" id="contactViaWhatsapp" onChange={this.handleChange}/>                                    
-=======
-                                        <Input type="checkbox" name="contactViaWhatsapp" id="contactViaWhatsapp" onChange={this.handleChange}/>                                    
->>>>>>> d4e5d18637d9bf51b5992bade8f93de4a9a2ca73
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" type="submit" >Save</Button>{' '}

@@ -45,7 +45,7 @@ public class AccountController {
 
     @PutMapping("{account}")
     //PUT at http://localhost:XXXX/account/{accountID}
-    public ResponseEntity<Account> updateAccount(@PathVariable("account") int accountID,  @RequestParam("licenseplate") String LicensePlate, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("phone") String phoneNo) {
+    public ResponseEntity<Account> updateAccount(@PathVariable("account") int accountID,  @RequestParam("licenseplate") String LicensePlate, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("phone") String phoneNo, @RequestParam("smsenable") boolean smsEnable) {
         Account account = accountService.getAccountById(accountID);
         if (account == null){
             return new ResponseEntity("Please provide a valid license plate.",HttpStatus.NOT_FOUND);
@@ -55,6 +55,7 @@ public class AccountController {
         account.setFirstName(firstName);
         account.setLastName(lastName);
         account.setPhoneNumber(phoneNo);
+        account.setContactViaWhatsapp(smsEnable);
         return ResponseEntity.noContent().build();
     }
 
