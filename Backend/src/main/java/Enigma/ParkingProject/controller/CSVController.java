@@ -20,4 +20,5 @@ public class CSVController {
     public void ScanCSV() throws IOException, CsvException {
         csvService.getCSv("c:/ParkingSpots.csv");
     }
+
 }

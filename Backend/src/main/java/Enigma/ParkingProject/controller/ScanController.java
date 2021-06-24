@@ -6,10 +6,12 @@ import Enigma.ParkingProject.service.*;
 import Enigma.ParkingProject.serviceinterfaces.IAppointmentService;
 import Enigma.ParkingProject.serviceinterfaces.ICSVService;
 import com.github.sarxos.webcam.Webcam;
+import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -42,7 +44,7 @@ public class ScanController {
     }
 
     @GetMapping("/LPR")
-    public void Scan () throws AWTException {
+    public void Scan () throws AWTException, IOException, CsvException {
 
         NotificationService notificationService = new NotificationService();
         SmsService smsService = new SmsService();
@@ -50,6 +52,7 @@ public class ScanController {
         String httpcar = "file:Screenshot.jpeg";
 
        if(lprService.Scan(httpcar) != null) {
+           csvService.getCSv("c:/ParkingSpots.csv");
            Account account = lprService.ScanAccount(httpcar);
            Appointment appointment = appointmentService.ScanAppointment(lprService.ScanAccount(httpcar).getAccountId());
            List<Appointment> guestsappointments = appointmentService.getAllAppointmentsFromGuest(account.getAccountId());
@@ -76,6 +79,7 @@ public class ScanController {
                    whatsapp.WhatsappParkingFull(account.getPhoneNumber(), account.getFirstName() + " " + account.getLastName());
                }
            }
+           csvService.ConvertToCSV();
 
         }
     }

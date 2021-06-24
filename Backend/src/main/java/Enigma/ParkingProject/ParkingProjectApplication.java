@@ -2,6 +2,7 @@ package Enigma.ParkingProject;
 
 import com.github.sarxos.webcam.*;
 import Enigma.ParkingProject.controller.ScanController;
+import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -35,7 +36,7 @@ public class ParkingProjectApplication implements WebcamMotionListener{
 			scanController.Scan();
 			Thread.sleep(5000);
 		}
-		catch(IOException | AWTException | InterruptedException e){ }
+		catch(IOException | AWTException | InterruptedException | CsvException e){ }
 		System.out.println("Motion detected " + Count);
 	}
 

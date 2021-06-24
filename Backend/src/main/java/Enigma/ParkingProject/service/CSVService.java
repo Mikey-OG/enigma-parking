@@ -9,8 +9,10 @@ import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,14 +67,26 @@ public class CSVService implements ICSVService {
             returnlist.add(spotCSV);
 
         }
-        if(returnlist != null)
-        {
-            return true;
-        }
-        else
+        if(returnlist.isEmpty())
         {
             return false;
         }
+        else
+        {
+            return true;
+        }
+    }
+    @Override
+    public void ConvertToCSV() throws IOException {
+        FileOutputStream fos = new FileOutputStream("C:\\ParkingSpots.csv", false);
+        PrintWriter pw = new PrintWriter(fos);
+        List<ParkingSpotEntity> spots = dal.getAllSpots();
+        for (ParkingSpotEntity spot:spots) {
+
+            pw.println(spot.getSpotID()+","+spot.getOccupied());
+        }
+        pw.close();
+        fos.close();
     }
 
 }
