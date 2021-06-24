@@ -10,6 +10,7 @@ public interface ICSVService {
     void getCSv(String filename) throws IOException, CsvException;
     List<ParkingSpotCSV> getallSpots();
     boolean checkForAvailableSpots();
+    void ConvertToCSV() throws IOException;
 
 
 }
