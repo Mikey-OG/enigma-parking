@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 
 public class Whatsapp {
     // Find your Account Sid and Token at twilio.com/console
-    public static final String ACCOUNT_SID = "AC6416fb83cd021d68e6017edaf49af703";
-    public static final String AUTH_TOKEN = "323b9d7e30c2d55993487ae90e48bc44";
+    public static final String ACCOUNT_SID = "input your account sid";
+    public static final String AUTH_TOKEN = "Input your Authentication token";
 
     public void WhatsappParkingFull() {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
