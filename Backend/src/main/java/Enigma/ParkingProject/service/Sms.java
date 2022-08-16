@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 
 public class Sms {
     // Find your Account Sid and Token at twilio.com/console
-    public static final String ACCOUNT_SID = "ACe45c96c2b43919a3173b4caf415abc87";
-    public static final String AUTH_TOKEN = "e50811fa1a0fe13b579149831af7231d";
+    public static final String ACCOUNT_SID = "input your Twilio account sid";
+    public static final String AUTH_TOKEN = "Input your authentication token";
 
     public void SendSmsParkingFull(){
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
